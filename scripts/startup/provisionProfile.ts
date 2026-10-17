@@ -29,9 +29,11 @@ export function copyProfilePreservingMtime(from: string, to: string): void {
 		// Exit codes 0-7 are all benign (1 = files copied, 2/4 = informational,
 		// OR-combined); 8+ is failure. A spawn failure reports no numeric status
 		// (robocopy never ran) and must rethrow — an unpopulated directory must
-		// not pose as a prepared profile.
+		// not pose as a prepared profile. /COPY:DAT keeps the mtime the probe
+		// cache keys on. /COPYALL also copies ownership and auditing, which a
+		// normal account cannot do and which this copy does not need.
 		try {
-			execFileSync('robocopy', [from, to, '/E', '/COPYALL', '/NFL', '/NDL', '/NJH', '/NJS'])
+			execFileSync('robocopy', [from, to, '/E', '/COPY:DAT', '/NFL', '/NDL', '/NJH', '/NJS'])
 		} catch (err) {
 			const status = (err as {status?: number}).status
 			if (typeof status !== 'number' || status >= 8) throw err

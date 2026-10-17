@@ -4,7 +4,7 @@ import {Button} from '../ui/button.js'
 import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip.js'
 import {actionDisabledTooltip, type QueueActionDefinition} from './queueManagerActions.js'
 
-export function TooltipIconButton({Icon, className, disabled, label, onClick, testId, title}: {Icon: ComponentType<{size?: number; 'aria-hidden'?: boolean; 'data-icon'?: string}>; className?: string; disabled?: boolean; label: string; onClick: () => void; testId?: string; title?: string}): ReactNode {
+function TooltipIconButton({Icon, className, disabled, label, onClick, testId, title}: {Icon: ComponentType<{size?: number; 'aria-hidden'?: boolean; 'data-icon'?: string}>; className?: string; disabled?: boolean; label: string; onClick: () => void; testId?: string; title?: string}): ReactNode {
 	const tooltip = title ?? label
 	return (
 		<Tooltip>

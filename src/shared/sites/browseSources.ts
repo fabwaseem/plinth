@@ -78,7 +78,7 @@ export function browseSourceForUrl(raw: string): BrowseSource | null {
 }
 
 // Hosts a typed address may load beyond the signed-in site's own content hosts.
-export function browseContentHosts(): readonly HostRule[] {
+function browseContentHosts(): readonly HostRule[] {
 	const extra = BROWSE_SOURCES.filter(entry => entry.id !== 'youtube').flatMap(entry => entry.hosts)
 	return [...extra, ...GOOGLE_HOSTS]
 }
