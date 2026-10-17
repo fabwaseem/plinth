@@ -1,0 +1,20 @@
+# Every pull request touching a path below needs review from the owner listed,
+# enforced by "Require review from Code Owners" in the main branch protection
+# rule. Without that setting enabled, this file is documentation only.
+
+# Default owner for everything not matched more specifically below.
+*                                     @fabwaseem
+
+# The donation address. A change here can redirect real, unrecoverable money,
+# so it must never ride along in an unrelated PR.
+/docs/DONATE.md                       @fabwaseem
+/.github/FUNDING.yml                  @fabwaseem
+
+# Release, signing, and publishing paths — these push to external package
+# repositories and carry WINGET_TOKEN.
+/.github/workflows/                   @fabwaseem
+/scripts/release.sh                   @fabwaseem
+/electron-builder.json5               @fabwaseem
+
+# This file itself, so ownership cannot be quietly reassigned.
+/.github/CODEOWNERS                   @fabwaseem

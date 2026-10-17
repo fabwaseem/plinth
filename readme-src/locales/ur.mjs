@@ -1,0 +1,404 @@
+const TECH_CONTENT = `<details>
+<summary><strong>Stack</strong></summary>
+
+- **Electron** — کراس پلیٹ فارم ڈیسک ٹاپ شیل
+- **React 19** + **TypeScript** — UI
+- **Tailwind CSS v4** — اسٹائلنگ
+- **Zustand** — اسٹیٹ مینجمنٹ
+- **yt-dlp** + **ffmpeg** — ڈاؤن لوڈ اور مکس انجن (yt-dlp runtime پر حاصل ہوتا ہے؛ ffmpeg/ffprobe build time پر بنڈل ہوتے ہیں)
+- **Vite** + **electron-vite** — بلڈ ٹولنگ
+- **Vitest** + **Playwright** — یونٹ اور اینڈ ٹو اینڈ ٹیسٹ
+
+</details>
+
+<details>
+<summary><strong>سورس سے بلڈ کریں</strong></summary>
+
+### تمام پلیٹ فارمز کے لیے ضروریات
+
+| ٹول    | ورژن | انسٹال |
+| ------- | ------- | ------- |
+| Git     | کوئی بھی | [git-scm.com](https://git-scm.com) |
+| Node.js | 24.21.0 | \`mise install\` یا \`.node-version\` |
+| Bun     | 1.4.2  | \`mise install\` یا \`package.json\` \`packageManager\` |
+
+تجویز کردہ: \`mise\` انسٹال کریں، پھر checkout میں \`mise install\` چلائیں۔ mise کے بغیر، \`bun run bootstrap\` سے پہلے \`.node-version\` سے Node.js اور \`package.json\` سے Bun کو دستی طور پر فعال کریں۔
+
+### Windows
+
+\`\`\`powershell
+powershell -c "irm bun.sh/install.ps1 | iex"
+\`\`\`
+
+نیٹو rebuilds کے لیے Visual Studio Build Tools اور Python درکار ہو سکتے ہیں۔
+
+### macOS
+
+\`\`\`bash
+brew install mise
+xcode-select --install
+\`\`\`
+
+کلون کرنے کے بعد checkout میں \`mise trust && mise install\` چلائیں۔ اگر آپ کا shell پہلے ہی \`fnm\`، \`nvm\`، یا Homebrew Bun استعمال کرتا ہے، تو \`~/.zshrc\` میں mise فعال کریں تاکہ Plinth کو Node.js 24.21.0 اور Bun 1.4.2 ملیں:
+
+\`\`\`bash
+printf '\n# mise\nif command -v mise >/dev/null 2>&1; then\n  eval "$(mise activate zsh)"\nfi\n' >> ~/.zshrc
+exec zsh
+\`\`\`
+
+### Linux (Ubuntu / Debian)
+
+\`\`\`bash
+curl -fsSL https://bun.sh/install | bash
+
+# build اور Electron رن ٹائم ڈپینڈنسیز
+sudo apt install -y build-essential python3 tar libgtk-3-0 libnss3 libasound2t64
+
+# صرف E2E ٹیسٹ کے لیے (Electron کو ڈسپلے درکار ہوتا ہے)
+sudo apt install -y xvfb
+\`\`\`
+
+### کلون اور رن کریں
+
+\`\`\`bash
+git clone https://github.com/fabwaseem/plinth
+cd Plinth
+mise trust
+mise install           # تجویز کردہ؛ اگر pinned tools دستی طور پر فعال ہیں تو چھوڑ دیں
+bun run bootstrap
+bun run doctor
+bun run dev            # Vite renderer کے ساتھ Electron app
+\`\`\`
+
+### تقسیم کے قابل بلڈ بنائیں
+
+\`\`\`bash
+bun run build        # ٹائپ چیک + کمپائل
+bun run dist         # موجودہ OS کے لیے پیکج
+bun run dist:win     # supported host پر Windows targets پیکج کریں
+\`\`\`
+
+> \`bun run bootstrap\` dependencies انسٹال کرتا ہے، Electron app dependencies کو rebuild کرتا ہے، Electron کی تصدیق کرتا ہے، development کے لیے embedded ffmpeg/ffprobe تیار کرتا ہے، اور Playwright Chromium انسٹال کرتا ہے۔ yt-dlp runtime پر app data folder میں manage ہوتا ہے؛ ffmpeg اور ffprobe ہر Plinth release کے ساتھ bundled ہوتے ہیں۔
+
+</details>`;
+
+export const ur = {
+  icon_alt: "Plinth",
+  title:
+    "Plinth — Windows، macOS اور Linux کے لیے مفت اوپن سورس YouTube (+ 2000 سائٹس) ڈاؤن لوڈر",
+  read_in_label: "زبان:",
+  badge_release_alt: "ریلیز",
+  badge_build_alt: "بلڈ",
+  badge_license_alt: "لائسنس",
+  badge_platforms_alt: "پلیٹ فارمز",
+  badge_i18n_alt: "زبانیں",
+  badge_website_alt: "ویب سائٹ",
+  hero_desc:
+    "**YouTube اور 2000+ معاون سائٹس** سے ویڈیوز، Shorts، موسیقی، چینلز، پوڈکاسٹ یا آڈیو ٹریک ڈاؤن لوڈ کریں — 60 fps پر 4K HDR تک، یا MP3 / AAC / Opus کے طور پر۔ Windows، macOS اور Linux پر مقامی طور پر چلتا ہے۔ **کوئی اشتہارات نہیں، کوئی بلوٹ نہیں، کوئی اپ سیلز نہیں۔**",
+  cta_latest: "↓ تازہ ترین ریلیز ڈاؤن لوڈ کریں",
+  cta_website: "ویب سائٹ",
+  demo_alt: "Plinth ڈیمو",
+  star_cta:
+    "اگر Plinth آپ کا وقت بچاتا ہے، تو ایک ⭐ دوسروں کو اسے ڈھونڈنے میں مدد کرتا ہے۔",
+  ai_notice:
+    "> 🌐 یہ AI کی مدد سے کیا گیا ترجمہ ہے۔ [انگریزی README](README.md) سچائی کا ماخذ ہے۔ کوئی غلطی نظر آئی؟ [PR کا خیر مقدم ہے](../../pulls)۔",
+  toc_heading: "فہرست",
+  why_h2: "Plinth کیوں",
+  features_h2: "خصوصیات",
+  dl_h2: "انسٹال اور پہلی بار لانچ",
+  privacy_h2: "پرائیویسی",
+  faq_h2: "اکثر پوچھے گئے سوالات",
+  roadmap_h2: "روڈ میپ",
+  tech_h2: "ان چیزوں سے بنایا گیا",
+  why_intro: "سب سے عام متبادل کے ساتھ ساتھ ساتھ موازنہ:",
+  why_r1: "مفت، کوئی پریمیم سطح نہیں",
+  why_r2: "اوپن سورس",
+  why_r3: "صرف مقامی پراسیسنگ",
+  why_r5: "استعمال کی کوئی حد نہیں",
+  why_r6: "کراس پلیٹ فارم ڈیسک ٹاپ ایپ",
+  why_r7: "سب ٹائٹلز + SponsorBlock",
+  why_summary:
+    "Plinth ایک ہی کام کے لیے بنایا گیا ہے: URL پیسٹ کریں، ایک صاف ستھری مقامی فائل حاصل کریں۔ کوئی اپ سیلز نہیں، کوئی ڈیٹا کلیکشن نہیں۔",
+  feat_explore_h3:
+    "Explore: Plinth کے اندر YouTube براؤز کریں",
+  feat_explore_1:
+    "**Explore ٹیب** — Plinth کے اندر YouTube براؤز کریں اور جو ملے اسے لنک کاپی کیے بغیر ڈاؤن لوڈ کریں۔ **ڈاؤن لوڈ · *آپ کا پروفائل*** وہ ویڈیو، پلے لسٹ یا چینل قطار میں لگاتا ہے جو آپ دیکھ رہے ہیں؛ اس کے ساتھ والا تیر پروفائل بدلتا ہے، اور جادوئی چھڑی فارمیٹس، سب ٹائٹلز اور مزید چننے کے لیے مرحلہ وار ڈاؤن لوڈ کھولتی ہے",
+  feat_explore_2:
+    "**ایڈریس بار** — YouTube پر تلاش کے لیے ٹائپ کریں یا YouTube کا لنک پیسٹ کریں۔ Explore صرف YouTube براؤز کرتا ہے، اس لیے کسی دوسری سائٹ کا لنک وہاں نہیں کھلتا، لیکن آپ اسے ایک کلک میں ڈاؤن لوڈ کر سکتے ہیں",
+  feat_explore_3:
+    "**وہ ڈاؤن لوڈز جنہیں اکاؤنٹ چاہیے** — Explore میں ایک بار سائن ان کریں اور Plinth وہ نجی اور صرف ممبران کے ویڈیوز ڈاؤن لوڈ کر سکتا ہے جو آپ کا اکاؤنٹ دیکھ سکتا ہے، عمر کی پابندی والے ویڈیوز اگر اکاؤنٹ کی عمر کی توثیق ہو چکی ہو، اور آپ کی Watch Later اور Liked فہرستیں۔ Plinth اب بھی سائن آؤٹ حالت میں ڈاؤن لوڈ کرتا ہے اور آپ کا Explore سائن ان صرف تب استعمال کرتا ہے جب ڈاؤن لوڈ ایسی وجہ سے ناکام ہو جسے اکاؤنٹ ٹھیک کر سکے۔ جب YouTube تصدیق مانگے کہ آپ بوٹ نہیں ہیں، تو Plinth آپ کا Explore سائن ان بھی آزماتا ہے",
+  feat_explore_4:
+    "**ثانوی اکاؤنٹ استعمال کریں** — Explore کی پہلی اسکرین وجہ بتاتی ہے: اکاؤنٹ کے ساتھ ڈاؤن لوڈ کرنے میں اس اکاؤنٹ پر پابندی لگنے کا کچھ خطرہ ہوتا ہے۔ سائن ان بھلانا چاہیں تو جب چاہیں Settings سے Explore سے سائن آؤٹ کر لیں",
+  feat_explore_5:
+    "**اشتہار بلاکر** — Explore اپنے صفحات پر اشتہارات اور ٹریکرز بلاک کرتا ہے؛ ڈاؤن لوڈز متاثر نہیں ہوتے۔ بطور ڈیفالٹ آن ہے، Explore کے ٹول بار میں شیلڈ پر ایک کلک اسے بند کر دیتا ہے، اور یہ Google کے سائن ان صفحات پر کبھی کام نہیں کرتا۔ YouTube سائن ان اکاؤنٹس کے لیے اشتہار بلاکرز کی مزاحمت کر سکتا ہے",
+  feat_quality_h3: "کوالٹی اور فارمیٹس",
+  feat_quality_1: "**4K UHD (2160p)** تک، 1440p، 1080p، 720p، 480p، 360p",
+  feat_quality_2:
+    "**ہائی فریم ریٹ** جیسا ہے ویسا ہی محفوظ — 60 fps، 120 fps، HDR",
+  feat_quality_3:
+    "**آڈیو** — صرف آڈیو کو MP3، M4A/AAC، Opus یا WAV میں ایکسپورٹ کریں۔ انٹرایکٹو ڈاؤن لوڈز میں، دستیاب ہونے پر ماخذ کے نیٹو surround/Dolby ٹریکس (AC-3، E-AC-3، 5.1، DRC) منتخب کریں، یا عالمی ڈیفالٹ **سراؤنڈ / Dolby کو ترجیح دیں** سیٹ کریں",
+  feat_quality_4: "فوری پری سیٹس: *بہترین کوالٹی* · *متوازن* · *چھوٹی فائل*",
+  feat_privacy_h3: "پرائیویسی اور کنٹرول",
+  feat_privacy_1:
+    "100% مقامی پراسیسنگ — ڈاؤن لوڈز سیدھے YouTube سے آپ کی ڈسک پر جاتے ہیں",
+  feat_privacy_2:
+    "کوئی لاگ ان نہیں، کوئی کوکیز نہیں، کوئی Google اکاؤنٹ منسلک نہیں",
+  feat_privacy_3: "فائلیں سیدھی آپ کے منتخب کردہ فولڈر میں محفوظ",
+  feat_workflow_h3: "ورک فلو",
+  feat_workflow_12: "**عالمی ڈاؤن لوڈ ہاٹ کی** — کسی بھی ایپ میں لنک کاپی کریں اور `Ctrl+Shift+D` (macOS پر `Cmd+Shift+D`) دبائیں؛ Plinth اسے ونڈو کھولے بغیر آپ کی فعال پروفائل کے ساتھ قطار میں ڈال دیتا ہے اور اطلاع سے تصدیق کرتا ہے۔ بطور ڈیفالٹ فعال، دوبارہ مقرر کی جا سکتی ہے",
+  feat_workflow_1:
+    "**لچکدار آغاز کے طریقے** — گائیڈڈ سنگل ڈاؤن لوڈ، پلے لسٹ/چینل پکر، bulk URL پیسٹ، محفوظ ڈیفالٹس کے ساتھ Quick Download، یا Explore سے براؤز اور ڈاؤن لوڈ منتخب کریں",
+  feat_workflow_2:
+    "**مرکزی ڈاؤن لوڈ قطار** — ہر سنگل، پلے لسٹ، bulk، یا quick کام پیش رفت، pause، resume، cancel، retry، اور priority کنٹرول کے لیے ایک ہی جگہ آتا ہے",
+  feat_workflow_3:
+    "**کلپ بورڈ واچ** — YouTube لنک کاپی کریں اور جب آپ ایپ پر واپس آئیں تو Plinth خود بخود URL بھر دیتا ہے (ایڈوانسڈ سیٹنگز میں ٹوگل کریں)",
+  feat_workflow_4:
+    "**خودکار صاف URLs** — ٹریکنگ پیرامیٹرز (`si`، `pp`، `utm_*`، `fbclid`، `gclid`) کو ہٹاتا ہے اور `youtube.com/redirect` لنکس کو کھولتا ہے",
+  feat_workflow_5:
+    "**ٹرے موڈ** — ونڈو بند کرنے سے ڈاؤن لوڈز پس منظر میں چلتے رہتے ہیں",
+  feat_workflow_6:
+    "**{{LANG_COUNT}} زبانیں** — سسٹم لوکیل کا خود بخود پتہ لگاتا ہے، کسی بھی وقت تبدیل کیا جا سکتا ہے",
+  feat_workflow_7:
+    "**پلے لسٹ سنک** — پہلے سے ڈاؤن لوڈ شدہ ویڈیوز چھوڑنے کے لیے پلے لسٹ کو مقامی فولڈر کے مقابل دوبارہ اسکین کرتا ہے؛ ہر ویڈیو ڈاؤن لوڈ ہونے پر اپ ڈیٹ ہونے والی `.m3u` پلے لسٹ فائل بناتا ہے",
+  feat_workflow_8:
+    "**رفتار اور pacing کنٹرولز** — ڈاؤن لوڈ bandwidth محدود کریں، طے کریں کہ ویڈیو کے کتنے حصے ایک ساتھ ڈاؤن لوڈ ہوں، اور presets (*بند · متوازن · محتاط · حسبِ ضرورت*) کے ساتھ requests کے درمیان delays شامل کریں",
+  feat_workflow_9:
+    "**فائل نام ٹیمپلیٹس** — `{title}`، `{uploader}`، `{id}`، `{date}`، `{resolution}` اور `{playlist_index}` کے ساتھ ڈاؤن لوڈ کے نام اپنی مرضی سے رکھیں، عالمی طور پر یا ہر ڈاؤن لوڈ پروفائل کے لیے",
+  feat_workflow_10:
+    "**ایک وقت میں ڈاؤن لوڈز اور خودکار دوبارہ کوشش** — منتخب کریں کہ قطار کے کتنے ڈاؤن لوڈز ایک ساتھ چلیں، اور نیٹ ورک یا سرور کی خرابی کا شکار ڈاؤن لوڈ Plinth ہر کوشش سے پہلے زیادہ انتظار کرتے ہوئے دوبارہ آزمائے",
+  feat_workflow_11:
+    "**پلے لسٹ میں ہر آئٹم کے لیے پروفائل** — پوری فہرست کے لیے ایک ہی سیٹنگ کے بجائے پلے لسٹ کے ہر ویڈیو کو اپنا ڈاؤن لوڈ پروفائل تفویض کریں، تاکہ ایک ہی مرحلے میں کچھ کو مکمل کوالٹی میں محفوظ کیا جائے اور باقی کو MP3 کے طور پر حاصل کیا جائے",
+  feat_workflow_13:
+    "**Quick Download پس منظر میں کام کرتا ہے** — لنک فوراً Downloads میں نظر آتا ہے اور وہیں تیار ہوتا ہے، **View** والا نوٹ اس کی تصدیق کرتا ہے، اور اگلے لنک کے لیے URL فیلڈ صاف ہو جاتا ہے۔ پچھلے تیار ہو رہے ہوں تو جتنے چاہیں شروع کریں",
+  feat_workflow_14:
+    "**Downloads بتاتا ہے کہ کس چیز کو آپ کی ضرورت ہے** — اگر Plinth کوئی لنک پڑھ نہ سکے تو اس کی قطار وجہ بتاتی ہے اور حل پیش کرتی ہے: دوبارہ کوشش، کوکیز آن کرنا، یا Explore میں سائن ان۔ کوکیز بند ہونے پر، آپ کے سائن ان کرنے کے بعد **Explore کے ساتھ سائن ان** اسے آپ کے لیے دوبارہ آزماتا ہے۔ آپ کی لوڈ حد سے لمبی پلے لسٹ اپنی قطار میں انتظار کرتی ہے کہ آپ پوری، ابتدائی چند، یا جائزہ چنیں۔ Downloads ٹیب ان قطاروں کی گنتی دکھاتا ہے جو آپ کی منتظر ہیں",
+  feat_post_h3: "سب ٹائٹلز اور پوسٹ پراسیسنگ",
+  feat_post_1:
+    "**سب ٹائٹلز** SRT، VTT یا ASS میں — دستی یا خود کار طریقے سے بنائے گئے، کسی بھی دستیاب زبان میں",
+  feat_post_2:
+    "ویڈیو کے ساتھ محفوظ کریں، `.mkv` میں ایمبیڈ کریں، یا `Subtitles/` سب فولڈر میں منظم کریں",
+  feat_post_3:
+    "**SponsorBlock** — اسپانسرز، انٹروز، آؤٹروز اور سیلف پروموز کو سکپ کریں یا چیپٹر مارک کریں",
+  feat_post_4:
+    "**ایمبیڈڈ میٹا ڈیٹا** — ٹائٹل، اپ لوڈ کی تاریخ، چینل، تفصیل، تھمب نیل اور چیپٹر مارکرز فائل میں لکھے جاتے ہیں",
+  feat_post_5:
+    "**صرف سب ٹائٹل بیچ** — URLs کی فہرست پیسٹ کریں یا پلے لسٹ کھولیں، سب ٹائٹلز منتخب کریں، اور ہر ویڈیو کے لیے صرف کیپشن فائلیں حاصل کریں",
+  feat_sites_h3: "YouTube + 2000 سائٹس",
+  feat_sites_1:
+    "**YouTube، مکمل** — Videos، Shorts، Channels، Playlists، YouTube Music اور Podcasts کو فرسٹ-کلاس ذرائع کے طور پر ہینڈل کیا جاتا ہے",
+  feat_sites_2:
+    "**2000+ دیگر سائٹس** yt-dlp کے ذریعے — Vimeo، Twitch، Twitter/X، TikTok، SoundCloud، Bandcamp، Bilibili، BBC iPlayer، archive.org اور بہت کچھ",
+  feat_sites_3:
+    "**صرف آڈیو اور سب ٹائٹلز** ہر معاون سائٹ پر کام کرتے ہیں، نہ صرف YouTube پر",
+  feat_sites_4:
+    "اگر کوئی سائٹ بدلتی ہے تو yt-dlp ہر ہفتے فکس جاری کرتا ہے اور Plinth لانچ پر بائنری خودکار طور پر اپ ڈیٹ کرتا ہے",
+  shot1_cap:
+    "<b>فوری ڈاؤن لوڈ ہوم</b><br/>URL پیسٹ کریں اور اپنی فعال پروفائل سے فوراً ڈاؤن لوڈ کریں",
+  shot2_cap:
+    "<b>دوبارہ قابلِ استعمال ڈاؤن لوڈ پروفائلز</b><br/>فارمیٹ، معیار اور آؤٹ پٹ کو پری سیٹ کے طور پر محفوظ کریں — ہر ڈاؤن لوڈ پر دوبارہ استعمال کریں",
+  shot3_cap:
+    "<b>کثیر لسانی آڈیو ٹریکس</b><br/>وہ بالکل درست آڈیو زبان منتخب کریں جو ویڈیو میں ہو",
+  shot4_cap:
+    "<b>سراؤنڈ / Dolby آڈیو</b><br/>5.1 اور Dolby ٹریکس کا پتہ لگا کر محفوظ رکھے جاتے ہیں",
+  shot5_cap:
+    "<b>بلک URL موڈ</b><br/>فہرست پیسٹ کریں، خودکار طور پر نقول ہٹائیں، سب کو ایک ساتھ قطار میں لگائیں",
+  shot6_cap:
+    "<b>متوازی ڈاؤن لوڈ قطار</b><br/>براہِ راست پیش رفت کے ساتھ بیک وقت کئی ڈاؤن لوڈز",
+  hotkey_fig_alt: "Plinth کی عالمی ڈاؤن لوڈ ہاٹ کی — Windows اور Linux پر Ctrl+Shift+D، macOS پر Cmd+Shift+D، کاپی کیا گیا لنک سیدھا ڈاؤن لوڈ قطار میں بھیجتی ہے",
+  hotkey_fig_cap: "<b>عالمی ڈاؤن لوڈ ہاٹ کی</b><br/>کہیں بھی لنک کاپی کریں، ایک بار دبائیں — یہ قطار میں آ جاتا ہے اور ڈاؤن لوڈ شروع ہو جاتا ہے",
+  shot7_cap: "<b>پلے لسٹ میں ہر آئٹم کے لیے پروفائل</b><br/>ہر ویڈیو کو اپنا پروفائل دیں — کچھ 4K میں محفوظ کریں، باقی MP3 کے طور پر لیں",
+  shot8_cap:
+    "<b>Explore</b><br/>Plinth کے اندر YouTube براؤز کریں اور اپنے فعال پروفائل کے ساتھ موجودہ صفحہ ڈاؤن لوڈ کریں",
+  shot9_cap:
+    "<b>Explore کی پہلی اسکرین</b><br/>Explore پر ایک نظر، اور ثانوی اکاؤنٹ محفوظ سائن ان کیوں ہے",
+  shot10_cap:
+    "<b>Downloads بتاتا ہے کہ کس چیز کو آپ کی ضرورت ہے</b><br/>لنکس پس منظر میں تیار ہوتے ہیں؛ ناکام لنک حل پیش کرتا ہے، لمبی پلے لسٹ آپ کے انتخاب کا انتظار کرتی ہے",
+  dl_platform_col: "پلیٹ فارم",
+  dl_format_col: "فارمیٹ",
+  dl_oneline_note:
+    "بلڈز صرف x86_64 کے لیے ہیں۔ `curl` نہیں ہے؟ `curl -fsSL` کی جگہ `wget -qO-` استعمال کریں۔",
+  dl_win_scoop:
+    "Scoop ترجیح دیتے ہیں؟ `scoop bucket add plinth https://github.com/fabwaseem/scoop-bucket && scoop install plinth`",
+  dl_win_format: "انسٹالر (NSIS) یا پورٹیبل `.exe`",
+  dl_mac_format: "`.dmg` (Intel + Apple Silicon)",
+  dl_linux_format: "`.AppImage` یا `.flatpak` (سینڈ باکسڈ)",
+  dl_grab: "تازہ ترین ریلیز حاصل کریں →",
+  dl_pkg_h3: "پیکج مینیجر کے ذریعے انسٹال کریں",
+  dl_channel_col: "چینل",
+  dl_command_col: "کمانڈ",
+  dl_win_h3: "Windows: انسٹالر بمقابلہ پورٹیبل",
+  dl_win_col_installer: "NSIS انسٹالر",
+  dl_win_col_portable: "پورٹیبل `.exe`",
+  dl_win_r1: "انسٹالیشن ضروری",
+  dl_win_r1_installer: "ہاں",
+  dl_win_r1_portable: "نہیں — کہیں سے بھی چلائیں",
+  dl_win_r2: "خودکار اپ ڈیٹس",
+  dl_win_r2_installer: "✅ ایپ کے اندر",
+  dl_win_r2_portable: "❌ دستی ڈاؤن لوڈ",
+  dl_win_r3: "اسٹارٹ اپ سپیڈ",
+  dl_win_r3_installer: "✅ تیز",
+  dl_win_r3_portable: "⚠️ کولڈ اسٹارٹ سست",
+  dl_win_r4: "اسٹارٹ مینو میں شامل",
+  dl_win_r5: "آسان ان انسٹال",
+  dl_win_r5_portable: "❌ بس فائل ڈیلیٹ کر دیں",
+  dl_win_rec:
+    "**تجویز:** خودکار اپ ڈیٹس اور تیز اسٹارٹ اپ کے لیے NSIS انسٹالر استعمال کریں۔ بغیر انسٹالیشن، بغیر رجسٹری آپشن کے لیے پورٹیبل `.exe` استعمال کریں۔",
+  dl_win_smartscreen_h4: "Windows SmartScreen وارننگ",
+  dl_win_smartscreen_intro:
+    'پہلی بار لانچ پر آپ کو **"Windows protected your PC"** یا **"Unknown publisher"** نظر آ سکتا ہے۔ یہ `Plinth-win-x64-Setup.exe` اور `Plinth-win-x64-Portable.exe` دونوں پر لاگو ہوتا ہے۔ Plinth مفت اور اوپن سورس ہے اور Windows بلڈز کو ادائیگی والے سرٹیفکیٹ سے کوڈ سائن نہیں کیا گیا، اسی لیے SmartScreen انہیں فلیگ کرتا ہے۔ اس کا مطلب **نہیں** کہ Plinth خود بخود غیر محفوظ ہے۔ جاری رکھنے کے لیے:',
+  dl_win_smartscreen_step1: "**More info** پر کلک کریں۔",
+  dl_win_smartscreen_step2: "**Run anyway** پر کلک کریں۔",
+  dl_win_smartscreen_official:
+    "Plinth صرف آفیشل GitHub Releases صفحے سے ڈاؤن لوڈ کریں۔ اگر آپ کو فائل کسی دوسری ویب سائٹ سے ملی ہے یا کسی نے بھیجی ہے، تو اسے ڈیلیٹ کریں اور آفیشل ماخذ سے تازہ کاپی ڈاؤن لوڈ کریں۔ سورس کوڈ عوامی ہے، اس لیے آپ خود اسے جانچ یا Plinth بنا سکتے ہیں۔",
+  dl_macos_h3: "macOS پر پہلی بار لانچ",
+  dl_macos_warning:
+    "Plinth ابھی کوڈ سائنڈ نہیں ہے، اس لیے macOS Gatekeeper پہلی بار لانچ پر damaged app والی وارننگ دکھا سکتا ہے۔ یہ متوقع ہے — اس کا مطلب یہ نہیں کہ فائلیں واقعی خراب ہیں۔",
+  dl_macos_m1_h4: "Terminal طریقہ:",
+  dl_macos_step1: "mounted DMG سے `Plinth.app` کو `/Applications` میں drag کریں۔",
+  dl_macos_step2:
+    "Terminal کھولیں اور `sudo xattr -dr com.apple.quarantine /Applications/Plinth.app` چلائیں۔",
+  dl_macos_step3: "`open /Applications/Plinth.app` چلائیں۔",
+  dl_macos_step4:
+    "اگر app کا path مختلف ہے، تو `/Applications/Plinth.app` کو اپنے install path سے بدل دیں۔",
+  dl_macos_step5:
+    "اگر `sudo` پوچھے تو اپنے Mac کا password درج کریں۔",
+  dl_macos_after:
+    "quarantine ہٹنے کے بعد Plinth عام طور پر کھلتا ہے۔",
+  dl_macos_m2_h4: "Terminal طریقہ:",
+  dl_macos_note:
+    "macOS بلڈز Apple Silicon اور Intel رنرز پر CI کے ذریعے تیار کیے جاتے ہیں۔ اگر آپ کو مسائل پیش آئیں، تو براہ کرم [ایک issue کھولیں](../../issues) — macOS صارفین سے ملنے والی فیڈ بیک macOS ٹیسٹنگ سائیکل کو فعال طور پر تشکیل دیتی ہے۔",
+  dl_linux_h3: "Linux پر پہلی بار لانچ",
+  dl_linux_intro:
+    "AppImages براہ راست چلتے ہیں — کوئی انسٹالیشن نہیں۔ آپ کو صرف فائل کو ایگزیکیوٹیبل مارک کرنا ہوگا۔",
+  dl_linux_m1_text:
+    "**فائل مینیجر:** `.AppImage` پر دائیں کلک کریں → **Properties** → **Permissions** → **Allow executing file as program** کو فعال کریں، پھر ڈبل کلک کریں۔",
+  dl_linux_m2_h4: "ٹرمینل:",
+  dl_linux_fuse_text: "اگر پھر بھی نہ چلے تو اسے ماؤنٹ کیے بغیر چلائیں — FUSE پیکیج کی ضرورت نہیں:",
+  dl_linux_targz_h4: "سادہ ٹاربال (نہ FUSE، نہ انسٹال):",
+  dl_linux_targz_text: "`.tar.gz` بلڈ وہی ایپ ہے، بس AppImage ریپر کے بغیر — کہیں بھی ایکسٹریکٹ کریں اور چلائیں۔ نہ انسٹالر چاہیے، نہ FUSE پیکیج۔",
+  dl_linux_arch_note: "**ریلیز پیج پر Linux ڈاؤن لوڈز صرف x86_64 کے لیے ہیں۔** ARM64 مشینوں (Raspberry Pi، Asahi Linux) پر Flatpak انسٹال تو ہو جاتا ہے مگر لانچ پر `bwrap: execvp ldconfig: Exec format error` کے ساتھ ناکام ہو جاتا ہے۔",
+  dl_warning_h3: "آپ کو وارننگ کیوں نظر آ سکتی ہے",
+  dl_warning_p1:
+    "Plinth اوپن سورس اور MIT لائسنس یافتہ ہے۔ Windows اور macOS بلڈز **کوڈ سائنڈ نہیں ہیں** — Apple Developer ID اور Windows EV کوڈ سائننگ سرٹیفکیٹس میں سے ہر ایک سالانہ سینکڑوں ڈالر لاگت آتی ہے، جو ایک انڈی پروجیکٹ اپنی جیب سے ادا کرتا ہے۔ ان دستخطوں کے بغیر، Windows SmartScreen اور macOS Gatekeeper پہلی بار لانچ پر آپ کو تنبیہ کریں گے۔ یہ تنبیہات اس بات کی علامت ہیں کہ *آپ کا OS ناشر کو نہیں پہچانتا* — یہ اس بات کی علامت نہیں کہ Plinth میلویئر ہے۔",
+  dl_warning_p2:
+    "Plinth کو خود جانچنے کے تین طریقے، بڑھتی ہوئی سختی کے ساتھ:\n\n- **سورس پڑھیں۔** ہر لائن [GitHub](https://github.com/fabwaseem/plinth) پر موجود ہے اور آپ [سورس سے بلڈ](#tech) کر سکتے ہیں۔\n- **SHA256 چیک کریں۔** اپنی فائل کو شائع شدہ [`SHA256SUMS`](../../releases/latest) سے ملائیں — نیچے [اپنا ڈاؤن لوڈ تصدیق کریں](#verify) دیکھیں۔\n- **تھرڈ پارٹی اسکین چلائیں۔** فائل کو [VirusTotal](https://www.virustotal.com) پر اپ لوڈ کریں۔",
+
+  dl_win_first_h3: "Windows پر پہلی بار لانچ",
+  shot_smartscreen_more_alt:
+    'SmartScreen "Windows protected your PC" ڈائیلاگ جس میں "More info" لنک نمایاں ہے',
+  shot_smartscreen_run_alt:
+    'More info کھولنے کے بعد SmartScreen ڈائیلاگ، جس میں "Run anyway" بٹن دکھائی دے رہا ہے',
+  dl_win_defender_h4: "اگر Windows Defender فائل کو فلیگ کرے یا ہٹا دے",
+  dl_win_defender_p:
+    "Defender کے ہیورسٹکس کبھی کبھی غیر سائنڈ NSIS انسٹالرز اور Electron پورٹیبلز کو مشکوک قرار دیتے ہیں۔ اگر Defender نے `Plinth-win-x64-Setup.exe` یا `Plinth-win-x64-Portable.exe` کو قرنطینہ میں ڈالا ہو، تو اسے **Windows Security → Virus & threat protection → Protection history** سے بحال کریں، پھر Plinth ایگزیکیوٹیبل کو **Manage settings → Add or remove exclusions** کے تحت اجازت یافتہ آئٹم کے طور پر شامل کریں۔ SmartScreen کی طرح، وجہ غائب پبلشر دستخط ہے، کوئی دریافت شدہ میلویئر نہیں۔",
+
+  dl_macos_first_h3: "macOS پر پہلی بار لانچ",
+  dl_macos_intro:
+    "Plinth ابھی macOS کے لیے کوڈ سائنڈ نہیں ہے، اس لیے DMG سے انسٹال کرنے کے بعد Gatekeeper خوفناک *\"Plinth.app is damaged and can't be opened\"* ڈائیلاگ دکھا سکتا ہے۔ اس پیغام کا مطلب ہے کہ macOS نے ایک unsigned app کو quarantine کیا ہے؛ اس کا مطلب یہ نہیں کہ app files واقعی خراب ہیں۔ موجودہ macOS پر قابل اعتماد حل Terminal ہے:",
+  dl_macos_sequoia_h4: "موجودہ macOS کے لیے Terminal فکس",
+  dl_macos_sequoia_intro:
+    "Plinth کو Applications میں copy کرنے کے بعد Terminal استعمال کریں:",
+  dl_macos_sequoia_step1:
+    "نصب شدہ DMG سے `Plinth.app` کو `/Applications` میں گھسیٹیں۔",
+  dl_macos_sequoia_step2:
+    "Terminal کھولیں اور یہ دو commands چلائیں:",
+  dl_macos_sequoia_step3:
+    "Plinth launch کرنے کے لیے `open /Applications/Plinth.app` چلائیں۔",
+  dl_macos_sequoia_step4:
+    "اگر app کا path مختلف ہے، تو `/Applications/Plinth.app` کو اپنے install path سے بدل دیں۔",
+  dl_macos_sonoma_h4: "پرانے macOS کے لیے Terminal فکس",
+  dl_macos_sonoma_step1:
+    "نصب شدہ DMG سے `Plinth.app` کو `/Applications` میں گھسیٹیں۔",
+  dl_macos_sonoma_step2:
+    "Terminal کھولیں اور `/Applications/Plinth.app` سے quarantine ہٹائیں۔",
+  dl_macos_sonoma_step3:
+    "quarantine ہٹنے کے بعد Plinth کو Terminal یا Finder سے launch کریں۔",
+  dl_macos_damaged_h4:
+    "Gatekeeper quarantine فکس",
+  dl_macos_damaged_p:
+    "پہلی command آپ کی installed Plinth copy سے quarantine attribute ہٹاتی ہے۔ دوسری app launch کرتی ہے۔ `sudo` آپ کے Mac کا password مانگ سکتا ہے؛ Terminal typing کے دوران characters نہیں دکھاتا۔",
+  dl_macos_arch_note:
+    "**Apple Silicon بمقابلہ Intel:** M-سیریز Mac پر (M1 / M2 / M3 / M4)، `arm64` DMG ڈاؤن لوڈ کریں۔ Intel Macs پر، `x64` DMG ڈاؤن لوڈ کریں۔ غلط بلڈ چلانا Rosetta کے ذریعے کام کرتا ہے لیکن نمایاں طور پر سست ہے۔",
+
+  dl_linux_first_h3: "Linux پر پہلی بار لانچ",
+  dl_linux_appimagelauncher:
+    "**اختیاری ڈیسک ٹاپ انٹیگریشن:** [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) ایک بار انسٹال کریں، اور جس بھی AppImage کو آپ ڈبل کلک کریں گے وہ خود بخود آپ کے لانچر مینو میں رجسٹر ہو جائے گا — کوئی دستی `.desktop` فائل نہیں چاہیے۔",
+
+  dl_verify_h3: "اپنا ڈاؤن لوڈ تصدیق کریں (SHA256)",
+  dl_verify_intro:
+    "ہر ریلیز بائنریز کے ساتھ `SHA256SUMS` فائل بھی شائع کرتی ہے۔ یہ جانچنے کے لیے کہ آپ کا ڈاؤن لوڈ ٹرانسمیشن میں خراب یا تبدیل نہیں ہوا، اپنی فائل کو مقامی طور پر ہیش کریں اور `SHA256SUMS` کی لائن سے ملائیں۔ تازہ ترین ریلیز پیج کھولیں → **Assets** → `SHA256SUMS` ڈاؤن لوڈ کریں۔",
+  dl_verify_win_label: "Windows (PowerShell یا Command Prompt):",
+  dl_verify_mac_label: "macOS (Terminal):",
+  dl_verify_linux_label: "Linux (Terminal):",
+  dl_verify_vt_text:
+    "تھرڈ پارٹی میلویئر اسکین چاہتے ہیں؟ فائل کو [VirusTotal](https://www.virustotal.com) پر اپ لوڈ کریں۔ چھوٹے انجنوں سے چند عام ہیورسٹک فلیگز غیر سائنڈ Electron ایپس کے لیے معمول ہیں؛ بڑے انجنوں سے وسیع پیمانے پر دریافت واقعی تشویش کا باعث ہوگی۔",
+
+  dl_pm_intro:
+    "پہلے سے پیکج مینیجر استعمال کرتے ہیں؟ آپ دستی ڈاؤن لوڈ کا راستہ چھوڑ سکتے ہیں۔",
+
+  privacy_p1:
+    "ڈاؤن لوڈز [yt-dlp](https://github.com/yt-dlp/yt-dlp) کے ذریعے براہ راست YouTube سے آپ کے منتخب کردہ فولڈر میں آتے ہیں — کسی تھرڈ پارٹی سرور سے نہیں گزرتے۔ دیکھنے کی تاریخ، ڈاؤن لوڈ تاریخ، URLs اور فائل کے مواد آپ کے ڈیوائس پر ہی رہتے ہیں۔",
+  privacy_p2:
+    "Plinth [OpenPanel](https://openpanel.dev) کے ذریعے گمنام، مجموعی ٹیلی میٹری بھیجتا ہے — صرف اتنی کہ ناکامیاں، کریشز، آراء، OS اور ایپ ورژنز سمجھ آ سکیں۔ کوئی URLs، ویڈیو ٹائٹلز، فائل پاتھز، اکاؤنٹ معلومات، fingerprinting یا ذاتی ڈیٹا نہیں۔ ہر انسٹال کا ID رینڈم ہے اور آپ کی شناخت سے منسلک نہیں۔ آپ Settings میں اسے بند کر سکتے ہیں۔",
+  privacy_p3:
+    "Explore کا اپنا سائن ان ہے، آپ کے browser سے الگ، اور Plinth سائن ان فارم کو کبھی نہیں پڑھتا اور نہ بھرتا — آپ Google کے اپنے صفحے پر ٹائپ کرتے ہیں۔ ڈاؤن لوڈز سائن آؤٹ حالت میں چلتے ہیں؛ صرف جب کوئی ڈاؤن لوڈ ایسی وجہ سے ناکام ہو جسے اکاؤنٹ ٹھیک کر سکے تو Plinth سائن ان کو نئے سرے سے پڑھتا ہے، اس ڈاؤن لوڈ کے لیے اسے ایک عارضی فائل میں رکھتا ہے، اور بعد میں فائل حذف کر دیتا ہے۔ Settings میں Explore سے سائن آؤٹ کرنے سے وہ بھول جاتا ہے۔",
+  faq_q1: "کیا یہ واقعی مفت ہے؟",
+  faq_a1: "ہاں — MIT لائسنس یافتہ، کوئی پریمیم سطح نہیں، کوئی فیچر گیٹنگ نہیں۔",
+  faq_q2: "میں کن ویڈیو کوالٹیز میں ڈاؤن لوڈ کر سکتا ہوں؟",
+  faq_a2:
+    "جو بھی YouTube فراہم کرتا ہے: 4K UHD (2160p)، 1440p، 1080p، 720p، 480p، 360p، اور صرف آڈیو۔ 60 fps، 120 fps اور HDR اسٹریمز جیسے ہیں ویسے ہی محفوظ ہوتے ہیں۔",
+  faq_q3: "کیا میں صرف آڈیو کو MP3 کے طور پر نکال سکتا ہوں؟",
+  faq_a3:
+    "جی ہاں۔ فارمیٹ مینو میں *صرف آڈیو* منتخب کریں اور پھر MP3، M4A/AAC، Opus یا WAV چنیں۔",
+  faq_q4: "جن ویڈیوز کو YouTube اکاؤنٹ چاہیے انہیں کیسے ڈاؤن لوڈ کروں؟",
+  faq_a4:
+    "Explore ٹیب میں ایک بار سائن ان کریں۔ اس کے بعد Plinth وہ نجی اور صرف ممبران کے ویڈیوز ڈاؤن لوڈ کر سکتا ہے جو آپ کا اکاؤنٹ دیکھ سکتا ہے، عمر کی پابندی والے ویڈیوز اگر اکاؤنٹ کی عمر کی توثیق ہو چکی ہو، اور آپ کی Watch Later اور Liked فہرستیں۔ یہ سائن ان صرف تب استعمال ہوتا ہے جب ڈاؤن لوڈ ایسی وجہ سے ناکام ہو جسے اکاؤنٹ ٹھیک کر سکے؛ باقی سب کچھ پہلے کی طرح ڈاؤن لوڈ ہوتا ہے۔ یہ **Explore سائن ان** کا انتخاب ہے، جو Cookies کی ترتیبات میں سب سے اوپر درج اور Recommended کے نشان کے ساتھ ہے، اور Explore پہلی بار کھولنے پر Plinth اسے خود چن لیتا ہے۔ yt-dlp کی وکی میں نوٹ کیا گیا ہے کہ [سائن ان کے ساتھ آٹومیشن Google اکاؤنٹ کو فلیگ کر سکتی ہے](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)، اس لیے ثانوی اکاؤنٹ زیادہ محفوظ انتخاب ہے۔",
+  faq_q5: "جب YouTube کچھ تبدیل کرے تو کیا یہ کام کرتا رہے گا؟",
+  faq_a5:
+    "yt-dlp لانچ پر خود بخود اپ ڈیٹ ہو جاتا ہے، اور جب YouTube کچھ تبدیل کرتا ہے تو Plinth فوری طور پر فکس فراہم کرتا ہے۔ جب YouTube تصدیق مانگے کہ آپ بوٹ نہیں ہیں، تو اگر آپ نے Explore میں سائن ان کیا ہو تو Plinth وہ بھی آزماتا ہے، اور فائل یا browser سے کوکیز Cookies کی ترتیبات میں دستیاب ہیں۔",
+  faq_q6: "Plinth کن زبانوں میں دستیاب ہے؟",
+  faq_a6:
+    "{{LANG_COUNT}} زبانیں فوراً دستیاب ہیں: {{LANG_NAME_LIST}}۔ Plinth پہلی بار چلنے پر آپ کے آپریٹنگ سسٹم کی زبان خود بخود پہچانتا ہے، اور آپ ٹول بار کے زبان چننے والے سے کسی بھی وقت زبان بدل سکتے ہیں۔ Runtime locale JSON src/shared/i18n/locales/ میں ہے، اور مترجمین کے لیے PO catalog i18n/locales/ میں ہے — تعاون کے لیے GitHub پر PR کھولیں۔",
+  faq_q7: "کیا مجھے کچھ اور انسٹال کرنا ہوگا؟",
+  faq_a7:
+    "نہیں۔ yt-dlp پہلی بار لانچ پر خود بخود ڈاؤن لوڈ ہو کر آپ کی مشین پر کیش ہو جاتا ہے؛ ffmpeg اور ffprobe ایپ کے ساتھ آتے ہیں۔ اس کے بعد کسی اضافی سیٹ اپ کی ضرورت نہیں۔",
+  faq_q8: "کیا میں پلے لسٹس یا پورے چینلز ڈاؤن لوڈ کر سکتا ہوں؟",
+  faq_a8:
+    "ہاں — دونوں۔ پلے لسٹ یا چینل URL پیسٹ کریں (مثلاً `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`)؛ منتخب کریں کہ کتنی entries scan کرنی ہیں، پھر پوری فہرست queue کریں یا مخصوص ویڈیوز چنیں۔ date-range filters جلد آ رہے ہیں۔",
+  faq_q9: 'macOS کہتا ہے "ایپ خراب ہے" — میں کیا کروں؟',
+  faq_a9:
+    "یہ macOS Gatekeeper ایک unsigned app کو block کر رہا ہے، اصل نقصان نہیں ہے۔ quarantine ہٹانے اور Plinth launch کرنے والی Terminal commands کے لیے [macOS first launch](#macos-first-launch) دیکھیں۔",
+  faq_q10: "کیا YouTube ویڈیوز ڈاؤن لوڈ کرنا قانونی ہے؟",
+  faq_a10:
+    "ذاتی، نجی استعمال کے لیے، زیادہ تر دائرہ اختیار میں یہ عام طور پر قبول کیا جاتا ہے۔ آپ YouTube کی [Terms of Service](https://www.youtube.com/t/terms) اور اپنے مقامی کاپی رائٹ قوانین کی پابندی کے ذمہ دار ہیں۔",
+  plan_intro: "ابھی بھی منصوبہ بند — تقریباً ترجیحی ترتیب سے:",
+  plan_col1: "خصوصیت",
+  plan_col2: "تفصیل",
+  plan_r1_name: "**پلے لسٹ اور چینل فلٹرز**",
+  plan_r1_desc: "پلے لسٹ یا چینل enumerate کرتے وقت date-range filters",
+  plan_r2_name: "**YouTube آڈیو ٹریک ترجیحات**",
+  plan_r2_desc:
+    "جب YouTube متعدد آڈیو ٹریک دے تو پوری app کے لیے بولی جانے والی زبان کا audio track preference مقرر کریں، اور ہر profile میں override کریں",
+  plan_r3_name: "**مضبوط retry recovery**",
+  plan_r3_desc:
+    "غیر معتبر یا مسئلہ پیدا کرنے والے internet connection سے رکی ہوئی ڈاؤن لوڈز کے لیے نیا retry راستہ",
+  plan_r4_name: "**مکمل download manager drawer**",
+  plan_r4_desc:
+    "queue drawer کو زیادہ مکمل manager میں بدلنا، queued items کے لیے destination folder تبدیل کرنے سمیت",
+  plan_r5_name: "**شیڈیولڈ ڈاؤن لوڈز**",
+  plan_r5_desc: "مقررہ وقت پر قطار شروع کریں (رات بھر کے رنز)",
+  plan_r7_name: "**کلپ ٹرمنگ**",
+  plan_r7_desc: "شروع/اختتام کے وقت سے صرف ایک سیگمنٹ ڈاؤن لوڈ کریں",
+  plan_r9_name: "**AUR پیکج**",
+  plan_r9_desc: "`yay -S plinth-bin` کے ذریعے Arch Linux اور Omarchy پر انسٹال کریں",
+  plan_cta:
+    "ذہن میں کوئی فیچر ہے؟ [ایک درخواست کھولیں](../../issues) — کمیونٹی کی رائے ترجیح کو تشکیل دیتی ہے۔",
+  tech_content: TECH_CONTENT,
+  support_h2: "Plinth کی معاونت کریں",
+  support_note: "Plinth مفت اور MIT لائسنس یافتہ ہے — نہ اشتہارات، نہ کوئی ادائیگی والا ورژن۔ اگر یہ آپ کا وقت بچاتا ہے تو آپ اس کی ترقی میں Bitcoin یا Tron کے ذریعے تعاون کر سکتے ہیں: پتے [DONATE.md](DONATE.md) میں درج ہیں، جو ان کا واحد سرکاری ذریعہ ہے۔ Plinth آپ کو کبھی ای میل یا ڈائریکٹ میسج کے ذریعے پتہ نہیں بھیجے گا۔ ریپو کو ستارہ دینا، خامیوں کی اطلاع دینا اور تراجم بہتر بنانا بھی اتنی ہی مدد کرتا ہے۔",
+  tos_h2: "استعمال کی شرائط",
+  tos_note:
+    "Plinth صرف ذاتی، نجی استعمال کے لیے ایک ٹول ہے۔ آپ اس بات کو یقینی بنانے کے واحد ذمہ دار ہیں کہ آپ کے ڈاؤن لوڈز YouTube کی [Terms of Service](https://www.youtube.com/t/terms) اور آپ کے دائرہ اختیار کے کاپی رائٹ قوانین کی پابندی کرتے ہیں۔ Plinth کو ایسے مواد کو ڈاؤن لوڈ، دوبارہ تیار یا تقسیم کرنے کے لیے استعمال نہ کریں جس کے استعمال کا حق آپ کے پاس نہیں ہے۔ ڈویلپرز کسی بھی غلط استعمال کے ذمہ دار نہیں ہیں۔",
+  footer_credit:
+    'MIT لائسنس · <a href="https://github.com/fabwaseem">Waseem Anjum</a> کی جانب سے محبت سے بنایا گیا',
+};

@@ -1,0 +1,5 @@
+# Renders the "Sponsor" button in the repository header and on every issue and
+# pull request page. GitHub has no field for cryptocurrency addresses, so the
+# custom link points at DONATE.md, the only official source for the address.
+custom:
+  - https://github.com/fabwaseem/plinth/blob/main/docs/DONATE.md

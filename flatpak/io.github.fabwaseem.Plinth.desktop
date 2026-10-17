@@ -1,0 +1,24 @@
+[Desktop Entry]
+Name=Plinth
+Name[de]=Plinth
+Name[es]=Plinth
+Name[fr]=Plinth
+Name[hi]=Plinth
+Name[ja]=Plinth
+Name[ru]=Plinth
+Name[uk]=Plinth
+Name[zh]=Plinth
+Comment=YouTube downloader for video, audio, and subtitles
+Comment[de]=YouTube Downloader für Video, Audio und Untertitel
+Comment[es]=Descargador de YouTube para vídeo, audio y subtítulos
+Comment[fr]=Téléchargeur YouTube pour vidéo, audio et sous-titres
+Comment[hi]=वीडियो, ऑडियो और सबटाइटल के लिए YouTube डाउनलोडर
+Comment[ja]=動画・音声・字幕に対応した YouTube ダウンローダー
+Comment[ru]=Загрузчик YouTube — видео, аудио и субтитры
+Comment[uk]=Завантажувач YouTube — відео, аудіо та субтитри
+Comment[zh]=下载 YouTube 视频、音频和字幕
+Exec=plinth.sh %U
+Icon=io.github.fabwaseem.Plinth
+Type=Application
+Categories=Network;AudioVideo;
+Keywords=youtube;video;download;dlp;yt-dlp;media;mp4;mkv;subtitle;

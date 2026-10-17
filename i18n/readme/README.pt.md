@@ -1,0 +1,502 @@
+<img src="../../src/renderer/src/assets/logo.svg" alt="Plinth" width="72" />
+
+# Plinth — Baixador gratuito e de código aberto do YouTube (+ 2000 sites) para Windows, macOS e Linux
+
+Baixe vídeos, Shorts, músicas, canais, podcasts ou faixas de áudio do **YouTube e de mais de 2000 sites compatíveis** — até 4K HDR a 60 fps, ou como MP3 / AAC / Opus. Roda localmente no Windows, no macOS e no Linux. **Sem anúncios, sem bloatware, sem vendas empurradas.**
+
+**Leia em:** [Afaan Oromoo](README.om.md) · [Bahasa Indonesia](README.id.md) · [Deutsch](README.de.md) · [English](../../README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Kiswahili](README.sw.md) · [O'zbekcha](README.uz.md) · [Polski](README.pl.md) · **Português** · [Tiếng Việt](README.vi.md) · [Türkçe](README.tr.md) · [አማርኛ](README.am.md) · [العربية](README.ar.md) · [اردو](README.ur.md) · [پښتو](README.ps.md) · [فارسی](README.fa.md) · [বাংলা](README.bn.md) · [हिन्दी](README.hi.md) · [ไทย](README.th.md) · [မြန်မာဘာသာ](README.my.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [Српски](README.sr.md) · [Українська](README.uk.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [繁體中文](README.zh-Hant.md)
+
+[**↓ Instalar a versão mais recente**](#install) · [**Site**](https://plinth.fabwaseem.com) · [Primeira execução no Windows](#windows-first-launch) · [Primeira execução no macOS](#macos-first-launch) · [Primeira execução no Linux](#linux-first-launch)
+
+Se o Plinth economiza seu tempo, uma ⭐ ajuda outras pessoas a encontrá-lo.
+
+_Last updated: 2026-10-17._
+
+> 🌐 Esta é uma tradução assistida por IA. O [README em inglês](README.md) é a fonte da verdade. Encontrou algum erro? [PRs são bem-vindos](../../pulls).
+
+Plinth is a free desktop app for Windows, macOS, and Linux. It saves video, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp) sites onto your computer. MIT licensed. No ads and no usage limits. Install it with [Winget](https://winget.run/pkg/WaseemAnjum/Plinth), [Scoop](https://github.com/fabwaseem/scoop-bucket), [Homebrew](https://github.com/fabwaseem/homebrew-plinth), Flatpak, AppImage, or a direct download.
+
+---
+
+## Conteúdo
+
+- [Recursos](#features)
+- [Instalação e primeira execução](#install)
+- [Por que o Plinth](#why)
+- [Privacidade](#privacy)
+- [Perguntas frequentes](#faq)
+- [Planejamento](#roadmap)
+- [Apoie o Plinth](#support)
+- [Feito com](#tech)
+
+---
+
+## <a id="features"></a>Recursos
+
+<img src="../../build/readme/download.png" alt="Plinth download screen" width="900" />
+
+<b>Tela inicial do Quick Download</b><br/>Cole uma URL e baixe na hora com o seu perfil ativo
+
+<img src="../../build/readme/browse.png" alt="Plinth browse screen" width="900" />
+
+<b>Explore</b><br/>Navegue pelo YouTube dentro do Plinth e baixe a página em que você está com o seu perfil ativo
+
+<img src="../../build/readme/bulk.png" alt="Plinth bulk URL screen" width="900" />
+
+<b>Modo de URLs em massa</b><br/>Cole uma lista, remova duplicatas automaticamente e enfileire tudo de uma vez
+
+<img src="../../build/readme/history.png" alt="Plinth history screen" width="900" />
+
+<b>Fila de downloads paralelos</b><br/>Vários downloads ao mesmo tempo com progresso ao vivo
+
+<img src="../../build/readme/profiles.png" alt="Plinth profiles screen" width="900" />
+
+<b>Perfis de download reutilizáveis</b><br/>Salve predefinições de formato, qualidade e saída — reutilize a cada download
+
+### Explore: navegue pelo YouTube dentro do Plinth
+
+- **Aba Explore** — navegue pelo YouTube dentro do Plinth e baixe o que encontrar sem copiar links. **Baixar · *seu perfil*** coloca na fila o vídeo, a playlist ou o canal que você está vendo; a seta ao lado troca de perfil, e a varinha abre o download passo a passo para escolher formatos, legendas e mais
+- **Barra de endereço** — digite para pesquisar no YouTube ou cole um link do YouTube. O Explore só navega pelo YouTube, então um link de outro site não é aberto ali, mas você pode baixá-lo com um clique
+- **Downloads que precisam de uma conta** — entre uma vez no Explore e o Plinth poderá baixar vídeos privados e exclusivos para membros que a sua conta consiga assistir, vídeos com restrição de idade se a idade da conta for verificada, e as suas listas Assistir mais tarde e Curtidos. O Plinth continua baixando sem login e só usa o seu login do Explore quando um download falha de um jeito que uma conta pode resolver. Quando o YouTube pede para confirmar que você não é um robô, o Plinth também tenta o seu login do Explore
+- **Use uma conta secundária** — a primeira tela do Explore explica o motivo: baixar com uma conta traz algum risco de essa conta ser restringida. Saia do Explore pelas configurações sempre que quiser esquecer o login
+- **Bloqueador de anúncios** — o Explore bloqueia anúncios e rastreadores nas próprias páginas; os downloads não são afetados. Ativado por padrão, um clique no escudo da barra de ferramentas do Explore o desativa, e ele nunca age nas páginas de login do Google. O YouTube pode dificultar o uso de bloqueadores de anúncios em contas conectadas
+
+### Qualidade e formatos
+
+- Até **4K UHD (2160p)**, 1440p, 1080p, 720p, 480p, 360p
+- **Alta taxa de quadros** preservada como está — 60 fps, 120 fps, HDR
+- **Áudio** — exporte apenas o áudio como MP3, M4A/AAC, Opus ou WAV. Nos downloads interativos, escolha as faixas surround/Dolby nativas da fonte (AC-3, E-AC-3, 5.1, DRC) quando existirem, ou defina um padrão global de **Preferir surround / Dolby**
+- Predefinições rápidas: *Melhor qualidade* · *Equilibrado* · *Arquivo pequeno*
+
+### Fluxo de trabalho
+
+- **Atalho global de download** — copie um link em qualquer app e pressione `Ctrl+Shift+D` (`Cmd+Shift+D` no macOS); o Plinth o coloca na fila com o seu perfil ativo sem abrir a janela, e uma notificação confirma. Ativo por padrão e reconfigurável
+- **Modos de início flexíveis** — escolha um download individual guiado, o seletor de playlist/canal, a colagem de URLs em massa, o Quick Download com os seus padrões salvos ou navegue e baixe pelo Explore
+- **Fila central de downloads** — todo trabalho individual, de playlist, em massa ou rápido chega a um só lugar, com progresso, pausa, retomada, cancelamento, nova tentativa e controle de prioridade
+- **Monitoramento da área de transferência** — copie um link do YouTube e o Plinth preenche a URL automaticamente quando você volta para o app (ative nas configurações avançadas)
+- **Limpeza automática de URLs** — remove parâmetros de rastreamento (`si`, `pp`, `utm_*`, `fbclid`, `gclid`) e desempacota links `youtube.com/redirect`
+- **Modo bandeja** — fechar a janela mantém os downloads rodando em segundo plano
+- **30 idiomas** — detecta automaticamente o idioma do sistema e pode ser trocado a qualquer momento
+- **Sincronização de playlists** — reanalise uma playlist comparando com uma pasta local para pular vídeos já baixados; gera um arquivo de playlist `.m3u` que é atualizado a cada vídeo baixado
+- **Controles de velocidade e ritmo** — limite a banda de download, defina quantas partes de um vídeo são baixadas ao mesmo tempo e adicione atrasos entre requisições com predefinições (*Desligado · Equilibrado · Cuidadoso · Personalizado*)
+- **Modelos de nome de arquivo** — nomeie os downloads do seu jeito com `{title}`, `{uploader}`, `{id}`, `{date}`, `{resolution}` e `{playlist_index}`, de forma global ou por perfil de download
+- **Downloads simultâneos e nova tentativa automática** — escolha quantos downloads da fila rodam ao mesmo tempo e deixe o Plinth tentar de novo um download que esbarrou em um problema de rede ou de servidor, esperando mais tempo a cada tentativa
+- **Perfis por item da playlist** — atribua a cada vídeo de uma playlist o seu próprio perfil de download, em vez de uma única configuração para a lista inteira, para arquivar alguns em qualidade máxima e pegar o restante como MP3 em uma só passada
+- **O Quick Download funciona em segundo plano** — o link aparece na hora em Downloads e é preparado ali, uma nota com **Ver** confirma, e o campo de URL é limpo para o próximo link. Inicie quantos quiser enquanto os anteriores são preparados
+- **Downloads mostra o que precisa de você** — se o Plinth não consegue ler um link, a linha dele diz o motivo e oferece a solução: Tentar novamente, ativar os cookies ou entrar no Explore. Com os cookies desativados, **Entrar com o Explore** tenta de novo por você assim que você entrar. Uma playlist maior que o seu limite de carregamento espera na própria linha até você escolher toda ela, os primeiros vídeos ou uma revisão. A aba Downloads conta as linhas que esperam por você
+
+### Legendas e pós-processamento
+
+- **Legendas** em SRT, VTT ou ASS — manuais ou geradas automaticamente, em qualquer idioma disponível
+- Salve ao lado do vídeo, incorpore no `.mkv` ou organize em uma subpasta `Subtitles/`
+- **SponsorBlock** — pule ou marque como capítulos os trechos de patrocínio, introduções, encerramentos e autopromoções
+- **Metadados incorporados** — título, data de publicação, canal, descrição, miniatura e marcadores de capítulo gravados no arquivo
+- **Lotes só de legendas** — cole uma lista de URLs ou abra uma playlist, escolha Legendas e receba apenas os arquivos de legenda de cada vídeo
+
+### YouTube + 2000 sites
+
+- **YouTube completo** — vídeos, Shorts, canais, playlists, YouTube Music e podcasts tratados como fontes de primeira classe
+- **Mais de 2000 outros sites** via yt-dlp — Vimeo, Twitch, Twitter/X, TikTok, SoundCloud, Bandcamp, Bilibili, BBC iPlayer, archive.org e muitos outros
+- **Apenas áudio e legendas** funcionam em todos os sites compatíveis, não só no YouTube
+- Se um site mudar, o yt-dlp lança correções toda semana e o Plinth atualiza o binário automaticamente na inicialização
+
+### Privacidade e controle
+
+- Processamento 100% local — os downloads vão direto do YouTube para o seu disco
+- **Código aberto** — cada linha pode ser auditada, sob licença MIT
+- Arquivos salvos direto na pasta que você escolher
+
+---
+
+## <a id="install"></a>Instalação e primeira execução
+
+**Windows**
+
+```bash
+winget install WaseemAnjum.Plinth
+```
+
+**macOS**
+
+```bash
+brew install --cask fabwaseem/plinth/plinth
+```
+
+**Linux**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/fabwaseem/plinth/main/scripts/install.sh | sh
+```
+
+Flatpak:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/fabwaseem/plinth/main/scripts/install.sh | sh -s -- --flatpak
+```
+
+As versões são apenas x86_64. Sem `curl`? Troque `curl -fsSL` por `wget -qO-`.
+
+| Plataforma | Download direto |
+| --- | --- |
+| Windows | [Setup](https://github.com/fabwaseem/plinth/releases/latest/download/Plinth-win-x64-Setup.exe) · [Portable](https://github.com/fabwaseem/plinth/releases/latest/download/Plinth-win-x64-Portable.exe) |
+| macOS | [Apple Silicon](https://github.com/fabwaseem/plinth/releases/latest/download/Plinth-mac-arm64.dmg) · [Intel](https://github.com/fabwaseem/plinth/releases/latest/download/Plinth-mac-x64.dmg) |
+| Linux | [AppImage](https://github.com/fabwaseem/plinth/releases/latest/download/Plinth-linux-x64.AppImage) · [Flatpak](https://github.com/fabwaseem/plinth/releases/latest/download/Plinth-linux-x64.flatpak) · [tar.gz](https://github.com/fabwaseem/plinth/releases/latest/download/Plinth-linux-x64.tar.gz) |
+| Verify | [SHA256SUMS](https://github.com/fabwaseem/plinth/releases/latest/download/SHA256SUMS) |
+
+[**Todos os arquivos da versão →**](https://github.com/fabwaseem/plinth/releases/latest)
+
+### <a id="windows-first-launch"></a>Primeira execução no Windows
+
+Na primeira execução você pode ver **"O Windows protegeu o seu PC"** ou **"Editor desconhecido"**. Isso vale tanto para o `Plinth-win-x64-Setup.exe` quanto para o `Plinth-win-x64-Portable.exe`. O Plinth é gratuito e de código aberto, e as builds para Windows não são assinadas com um certificado pago — é por isso que o SmartScreen as sinaliza. Isso **não** significa automaticamente que o Plinth seja inseguro. Para continuar:
+
+<img src="../../build/win-smartscreen-more-info.png" width="420" alt="Caixa de diálogo do SmartScreen "O Windows protegeu o seu PC" com o link "Mais informações" destacado" />
+<img src="../../build/win-smartscreen-run-anyway.png" width="420" alt="Caixa de diálogo do SmartScreen depois de expandir "Mais informações", mostrando o botão "Executar assim mesmo"" />
+
+1. Clique em **Mais informações**.
+2. Clique em **Executar assim mesmo**.
+
+#### Se o Windows Defender sinalizar ou remover o arquivo
+
+As heurísticas do Defender às vezes sinalizam como suspeitos instaladores NSIS e executáveis portáteis do Electron sem assinatura. Se o Defender colocar o `Plinth-win-x64-Setup.exe` ou o `Plinth-win-x64-Portable.exe` em quarentena, restaure-o em **Segurança do Windows → Proteção contra vírus e ameaças → Histórico de proteção** e depois adicione o executável do Plinth como item permitido em **Gerenciar configurações → Adicionar ou remover exclusões**. Assim como no SmartScreen, o gatilho é a falta da assinatura do publicador, não a detecção de malware.
+
+> Baixe o Plinth apenas pela página oficial de releases do GitHub. Se você recebeu o arquivo de outro site ou de alguém, apague-o e baixe uma cópia nova na fonte oficial. O código-fonte é público, então você pode inspecioná-lo ou compilar o Plinth por conta própria se preferir.
+
+Prefere o Scoop? `scoop bucket add plinth https://github.com/fabwaseem/scoop-bucket && scoop install plinth`
+
+### <a id="macos-first-launch"></a>Primeira execução no macOS
+
+O Plinth ainda não é assinado digitalmente para macOS, então o Gatekeeper pode mostrar a assustadora mensagem *"O Plinth.app está danificado e não pode ser aberto"* depois que você o instala pelo DMG. Essa mensagem quer dizer que o macOS colocou em quarentena um app sem assinatura; não quer dizer que os arquivos do app estejam realmente danificados. Nas versões atuais do macOS, a solução confiável é pelo Terminal:
+
+1. Arraste o `Plinth.app` do DMG montado para a pasta `/Applications`.
+2. Abra o Terminal e rode estes dois comandos:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Plinth.app
+open /Applications/Plinth.app
+```
+
+O primeiro comando remove o atributo de quarentena da sua cópia instalada do Plinth. O segundo abre o app. O `sudo` pode pedir a senha do seu Mac; o Terminal não mostra os caracteres enquanto você digita.
+
+**Apple Silicon x Intel:** em um Mac com chip M (M1 / M2 / M3 / M4), baixe o DMG `arm64`. Em Macs Intel, baixe o DMG `x64`. A build errada ainda funciona via Rosetta, mas fica visivelmente mais lenta.
+
+> As builds para macOS são geradas por CI em runners Apple Silicon e Intel. Se você encontrar problemas, [abra uma issue](../../issues) — o retorno de quem usa macOS orienta ativamente o ciclo de testes nessa plataforma.
+
+### <a id="why-warning"></a>Por que você pode ver um aviso
+
+O Plinth é de código aberto e licenciado sob MIT. As builds para Windows e macOS **não são assinadas digitalmente** — os certificados Apple Developer ID e de assinatura EV do Windows custam centenas de dólares por ano cada um, e um projeto independente paga isso do próprio bolso. Sem essas assinaturas, o SmartScreen do Windows e o Gatekeeper do macOS avisam na primeira execução. Os avisos dizem que *o seu sistema não reconhece o publicador* — não que o Plinth seja malware.
+
+Três formas de verificar o Plinth por conta própria, em ordem crescente de rigor:
+
+- **Leia o código-fonte.** Cada linha está no [GitHub](https://github.com/fabwaseem/plinth) e você pode [compilar a partir do código](#tech).
+- **Confira o SHA256.** Compare o seu arquivo com o [`SHA256SUMS`](https://github.com/fabwaseem/plinth/releases/latest/download/SHA256SUMS) publicado — veja [Verifique o seu download](#verify) abaixo.
+- **Rode uma varredura de terceiros.** Envie o arquivo para o [VirusTotal](https://www.virustotal.com).
+
+### <a id="linux-first-launch"></a>Primeira execução no Linux
+
+AppImages rodam direto — sem instalação. Você só precisa marcar o arquivo como executável.
+
+**Gerenciador de arquivos:** clique com o botão direito no `.AppImage` → **Propriedades** → **Permissões** → ative **Permitir execução do arquivo como programa** e depois dê dois cliques.
+
+**Terminal:**
+
+```bash
+chmod +x Plinth-linux-x64.AppImage
+./Plinth-linux-x64.AppImage
+```
+
+Se mesmo assim não abrir, execute sem montagem — não precisa do pacote FUSE:
+
+```bash
+./Plinth-linux-x64.AppImage --appimage-extract-and-run
+```
+
+**Integração opcional com o desktop:** instale o [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) uma vez e qualquer AppImage em que você der dois cliques é registrado automaticamente no menu de aplicativos — sem precisar criar um arquivo `.desktop` na mão.
+
+**Tarball simples (sem FUSE, sem instalação):**
+
+A versão `.tar.gz` é o mesmo app sem o invólucro AppImage — extraia em qualquer lugar e execute. Sem instalador e sem pacote FUSE.
+
+```bash
+tar xzf Plinth-linux-x64.tar.gz
+./Plinth-linux-x64/plinth
+```
+
+**Os downloads de Linux na página de versões são apenas x86_64.** Em máquinas ARM64 (Raspberry Pi, Asahi Linux) o Flatpak instala, mas falha ao iniciar com `bwrap: execvp ldconfig: Exec format error`.
+
+<details>
+<summary><strong><a id="verify"></a>Verifique o seu download (SHA256)</strong></summary>
+
+Toda release publica um arquivo `SHA256SUMS` junto com os binários. Para conferir se o seu download não foi corrompido ou adulterado no caminho, calcule o hash do arquivo localmente e compare com a linha correspondente no `SHA256SUMS`. Abra a página da última release → **Assets** → baixe o `SHA256SUMS`.
+
+**Windows (PowerShell ou Prompt de Comando):**
+
+```powershell
+certutil -hashfile Plinth-win-x64-Setup.exe SHA256
+```
+
+**macOS (Terminal):**
+
+```bash
+shasum -a 256 Plinth-mac-arm64.dmg
+```
+
+**Linux (Terminal):**
+
+```bash
+sha256sum Plinth-linux-x64.AppImage
+```
+
+Quer uma varredura antimalware de terceiros? Envie o arquivo para o [VirusTotal](https://www.virustotal.com). Alguns poucos alertas de heurística genérica vindos de motores menores são normais em apps Electron sem assinatura; detecções generalizadas nos principais motores seriam motivo real de preocupação.
+
+</details>
+
+<details>
+<summary><strong>Windows: instalador ou portátil</strong></summary>
+
+| | Instalador NSIS | `.exe` portátil |
+| --- | --- | --- |
+| Precisa instalar | Sim | Não — rode de qualquer lugar |
+| Atualizações automáticas | ✅ dentro do app | ❌ download manual |
+| Velocidade de inicialização | ✅ mais rápida | ⚠️ início a frio mais lento |
+| Adiciona ao menu Iniciar | Yes | No |
+| Desinstalação fácil | Yes | ❌ apague o arquivo |
+
+**Recomendação:** use o instalador NSIS para ter atualizações automáticas e inicialização mais rápida. Use o `.exe` portátil se quiser uma opção sem instalação e sem registro.
+
+</details>
+
+---
+
+## <a id="why"></a>Por que o Plinth
+
+O Plinth foi feito para uma coisa só: você cola uma URL e recebe um arquivo local limpo. Sem vendas empurradas, sem coleta de dados.
+
+| | Plinth |
+| --- | --- |
+| Gratuito, sem plano premium | Yes |
+| Código aberto | Yes |
+| Processamento apenas local | Yes |
+| Sem limites de uso | Yes |
+| App de desktop multiplataforma | Yes |
+| Legendas + SponsorBlock | Yes |
+
+---
+
+## <a id="privacy"></a>Privacidade
+
+Os downloads são feitos direto pelo [yt-dlp](https://github.com/yt-dlp/yt-dlp), do YouTube para a pasta que você escolher — nada passa por um servidor de terceiros. Histórico de vídeos, histórico de downloads, URLs e o conteúdo dos arquivos ficam no seu dispositivo.
+
+O Plinth envia telemetria anônima e agregada pelo [OpenPanel](https://openpanel.dev) — apenas o suficiente para um projeto independente entender falhas, quedas, feedback, sistema operacional e versões do app. Sem URLs, títulos de vídeo, caminhos de arquivo, dados de conta, fingerprinting ou dados pessoais. O identificador por instalação é aleatório e não está ligado à sua identidade. Você pode desativar nas configurações.
+
+O Explore mantém o próprio login, separado do seu navegador, e o Plinth nunca lê nem preenche o formulário de login — você digita na própria página do Google. Os downloads rodam sem login; só quando um falha de um jeito que uma conta pode resolver, o Plinth lê o login na hora, guarda em um arquivo temporário para aquele download e apaga o arquivo depois. Sair do Explore nas configurações faz o login ser esquecido.
+
+---
+
+## <a id="faq"></a>Perguntas frequentes
+
+**É realmente gratuito?**
+Sim — licença MIT, sem plano premium, sem recursos bloqueados.
+
+**Que qualidades de vídeo eu posso baixar?**
+Tudo o que o YouTube oferecer: 4K UHD (2160p), 1440p, 1080p, 720p, 480p, 360p, além de apenas áudio. Streams em 60 fps, 120 fps e HDR são preservados como estão.
+
+**Dá para extrair só o áudio em MP3?**
+Sim. Escolha *apenas áudio* no menu de formatos e selecione MP3, M4A/AAC, Opus ou WAV.
+
+**Como baixo vídeos que exigem uma conta do YouTube?**
+Entre uma vez na aba Explore. O Plinth poderá então baixar vídeos privados e exclusivos para membros que a sua conta consiga assistir, vídeos com restrição de idade se a idade da conta for verificada, e as suas listas Assistir mais tarde e Curtidos. Ele só usa o login quando um download falha de um jeito que uma conta pode resolver; todo o resto é baixado como antes. É a opção **Login do Explore**, listada primeiro e marcada como Recomendada nas configurações de cookies, e o Plinth a seleciona para você na primeira vez que abrir o Explore. A wiki do yt-dlp alerta que [a automação com login pode marcar uma conta Google](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies), então uma conta secundária é a opção mais segura.
+
+**Vai continuar funcionando quando o YouTube mudar alguma coisa?**
+O yt-dlp é atualizado automaticamente na inicialização, e o Plinth lança correções rapidamente quando o YouTube muda algo. Quando o YouTube pede para confirmar que você não é um robô, o Plinth também tenta o seu login do Explore, se você entrou lá, e os cookies de um arquivo ou do seu navegador estão disponíveis nas configurações de cookies.
+
+**Em quais idiomas o Plinth está disponível?**
+30 idiomas, prontos para uso: Afaan Oromoo · Bahasa Indonesia · Deutsch · English · Español · Français · Italiano · Kiswahili · O'zbekcha · Polski · Português · Tiếng Việt · Türkçe · አማርኛ · العربية · اردو · پښتو · فارسی · বাংলা · हिन्दी · ไทย · မြန်မာဘာသာ · Ελληνικά · Русский · Српски · Українська · 中文 · 日本語 · 한국어 · 繁體中文. O Plinth detecta automaticamente o idioma do seu sistema operacional na primeira execução, e você pode trocar quando quiser pelo seletor de idiomas na barra de ferramentas. Os JSON de idioma usados em runtime ficam em src/shared/i18n/locales/, e os catálogos PO para tradutores ficam em i18n/locales/ — abra um PR no GitHub para contribuir.
+
+**Preciso instalar mais alguma coisa?**
+Não. O yt-dlp é baixado automaticamente na primeira execução e fica em cache na sua máquina; o ffmpeg e o ffprobe já vêm com o app. Depois disso, nenhuma configuração extra é necessária.
+
+**Dá para baixar playlists ou canais inteiros?**
+Sim — os dois. Cole a URL de uma playlist ou de um canal (por exemplo `youtube.com/@handle`, `/channel/UC…`, `/c/Nome`, `/user/Antigo`); escolha quantos itens analisar e depois enfileire a lista inteira ou selecione vídeos específicos. Filtros por intervalo de datas estão a caminho.
+
+**O macOS diz que "o app está danificado" — o que eu faço?**
+É o Gatekeeper do macOS bloqueando um app sem assinatura, não um dano real. Veja [Primeira execução no macOS](#macos-first-launch) para os comandos de Terminal que removem a quarentena e abrem o Plinth.
+
+**Baixar vídeos do YouTube é legal?**
+Para uso pessoal e privado, costuma ser aceito na maioria das jurisdições. Você é responsável por cumprir os [Termos de Serviço](https://www.youtube.com/t/terms) do YouTube e as leis de direito autoral do seu país.
+
+---
+
+## <a id="roadmap"></a>Planejamento
+
+Ainda planejado — mais ou menos em ordem de prioridade:
+
+| Recurso | Descrição |
+| --- | --- |
+| **Filtros de playlist e canal** | Filtros por intervalo de datas ao enumerar uma playlist ou um canal |
+| **Preferências de faixa de áudio do YouTube** | Defina uma preferência global de idioma falado, com substituições por perfil quando o YouTube oferecer várias faixas de áudio |
+| **Recuperação de tentativas mais robusta** | Um novo caminho de nova tentativa para downloads interrompidos por conexões instáveis ou problemáticas |
+| **Gaveta completa de gerenciamento de downloads** | Transformar a gaveta da fila em um gerenciador mais completo, incluindo a troca da pasta de destino dos itens enfileirados |
+| **Downloads agendados** | Iniciar uma fila em um horário definido (execuções durante a madrugada) |
+| **Corte de trechos** | Baixar apenas um trecho, por horário de início e fim |
+| **Pacote AUR** | Instalação no Arch Linux e no Omarchy com `yay -S plinth-bin` |
+
+Tem um recurso em mente? [Abra um pedido](../../issues) — a participação da comunidade define as prioridades.
+
+---
+
+## <a id="support"></a>Apoie o Plinth
+
+O Plinth é gratuito e licenciado sob MIT — sem anúncios, sem plano pago. Se ele economiza o seu tempo, você pode apoiar o desenvolvimento com Bitcoin ou Tron: os endereços estão no [DONATE.md](../../docs/DONATE.md), que é a única fonte oficial deles. O Plinth nunca vai te enviar um endereço por e-mail ou mensagem direta. Dar uma estrela ao repositório, relatar bugs e melhorar as traduções ajuda tanto quanto.
+
+[Bitcoin and Tron addresses](../../docs/DONATE.md)
+
+---
+
+## <a id="tech"></a>Feito com
+
+<details>
+<summary><strong>Stack</strong></summary>
+
+- **Electron** — shell de desktop multiplataforma
+- **React 19** + **TypeScript** — interface
+- **Tailwind CSS v4** — estilos
+- **Zustand** — gerenciamento de estado
+- **yt-dlp** + **ffmpeg** — motor de download e mux (o yt-dlp é baixado em runtime; ffmpeg/ffprobe vêm embutidos na compilação)
+- **Vite** + **electron-vite** — ferramentas de build
+- **Vitest** + **Playwright** — testes unitários e de ponta a ponta
+
+</details>
+
+<details>
+<summary><strong>Compilar a partir do código-fonte</strong></summary>
+
+### Pré-requisitos — todas as plataformas
+
+| Ferramenta | Versão   | Instalação |
+| ---------- | -------- | ---------- |
+| Git        | qualquer | [git-scm.com](https://git-scm.com) |
+| Node.js    | 24.21.0  | `mise install` ou `.node-version` |
+| Bun        | 1.4.2   | `mise install` ou `packageManager` do `package.json` |
+
+Recomendado: instale o `mise` e rode `mise install` no checkout. Sem o mise, ative manualmente o Node.js a partir do `.node-version` e o Bun a partir do `package.json` antes de rodar `bun run bootstrap`.
+
+### Windows
+
+```powershell
+powershell -c "irm bun.sh/install.ps1 | iex"
+```
+
+O Visual Studio Build Tools e o Python podem ser necessários para recompilar módulos nativos.
+
+### macOS
+
+```bash
+brew install mise
+xcode-select --install
+```
+
+Depois de clonar, rode `mise trust && mise install` no checkout. Se o seu shell já usa `fnm`, `nvm` ou um Bun do Homebrew, ative o mise no `~/.zshrc` para que o Plinth use o Node.js 24.21.0 e o Bun 1.4.2:
+
+```bash
+printf '
+# mise
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
+' >> ~/.zshrc
+exec zsh
+```
+
+### Linux (Ubuntu / Debian)
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+
+# Dependências de build + runtime do Electron
+sudo apt install -y build-essential python3 tar libgtk-3-0 libnss3 libasound2t64
+
+# Somente para testes E2E (o Electron precisa de um display)
+sudo apt install -y xvfb
+```
+
+### Clonar e executar
+
+```bash
+git clone https://github.com/fabwaseem/plinth
+cd Plinth
+mise trust
+mise install           # recomendado; pule se você já ativou manualmente as versões fixadas
+bun run bootstrap
+bun run doctor
+bun run dev            # app Electron rodando contra o renderer do Vite
+```
+
+### Gerar um pacote distribuível
+
+```bash
+bun run build        # typecheck + compilação
+bun run dist         # empacota para o sistema atual
+bun run dist:win     # empacota os alvos Windows quando executado em um host compatível
+```
+
+> O `bun run bootstrap` instala as dependências, recompila as dependências nativas do Electron, verifica o Electron, prepara o ffmpeg/ffprobe embutidos para desenvolvimento e instala o Chromium do Playwright. O yt-dlp é gerenciado em runtime na sua pasta de dados do app; o ffmpeg e o ffprobe acompanham todas as versões do Plinth.
+
+</details>
+
+---
+
+## Troubleshooting
+
+### App won't open / no window appears
+
+The Plinth process starts but no window shows up. Most often this is a GPU driver hang during startup.
+
+**1. Check the log.**
+
+| Platform | Path |
+| --- | --- |
+| Windows | `%APPDATA%\Plinth\logs\main.log` |
+| macOS | `~/Library/Logs/Plinth/main.log` |
+| Linux | `~/.config/Plinth/logs/main.log` |
+
+**2. Launch with hardware acceleration disabled.**
+
+```bash
+# Windows (Portable) — PowerShell
+.\Plinth-win-x64-Portable.exe --disable-gpu
+
+# Windows (Installed)
+"%LOCALAPPDATA%\Programs\Plinth\Plinth.exe" --disable-gpu
+
+# macOS
+/Applications/Plinth.app/Contents/MacOS/Plinth --disable-gpu
+
+# Linux (AppImage)
+./Plinth-linux-x64.AppImage --disable-gpu
+```
+
+**3. Persist the flag via `argv.json`.**
+
+| Platform | Path |
+| --- | --- |
+| Windows | `%APPDATA%\Plinth\argv.json` |
+| macOS | `~/Library/Application Support/Plinth/argv.json` |
+| Linux | `~/.config/Plinth/argv.json` |
+
+```json
+{ "disable-hardware-acceleration": true }
+```
+
+**4. Other flags worth trying:** `--disable-software-rasterizer`, `--disable-gpu-sandbox`, `--in-process-gpu`.
+
+**5. Stale window position.** Delete `<userData>\window-state.json` and relaunch.
+
+**6. Still stuck?** Open an issue with your OS version and any output from `--enable-logging --v=1`. If the window does open, attach the file from **Settings → Save diagnostics file**.
+
+---
+
+## Termos de uso
+
+O Plinth é uma ferramenta para uso pessoal e privado apenas. Você é o único responsável por garantir que os seus downloads cumpram os [Termos de Serviço](https://www.youtube.com/t/terms) do YouTube e as leis de direito autoral da sua jurisdição. Não use o Plinth para baixar, reproduzir ou distribuir conteúdo que você não tem o direito de usar. Os desenvolvedores não se responsabilizam por qualquer uso indevido.
+
+Licença MIT · Feito com cuidado por <a href="https://github.com/fabwaseem">Waseem Anjum</a>
