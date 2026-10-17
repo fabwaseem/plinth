@@ -679,8 +679,9 @@ jobs:
   notify-web-release-manifest:
     needs: publish-release
     # Only stable releases should update the public landing-page manifest.
-    # Pre-releases are intentionally invisible to /releases/latest.
-    if: ${{ !contains(github.ref_name, '-') }}
+    # Pre-releases are intentionally invisible to /releases/latest. A failed
+    # startup gate must not skip this; only a cancelled or unpublished release does.
+    if: ${{ !cancelled() && needs.publish-release.result == 'success' && !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch plinth-web manifest refresh
@@ -701,8 +702,8 @@ jobs:
   publish-scoop:
     needs: publish-release
     # Skip for pre-release tags (e.g. v0.4.0-beta.1) — only stable releases
-    # bump the public Scoop bucket.
-    if: ${{ !contains(github.ref_name, '-') }}
+    # bump the public Scoop bucket. Independent of the startup gate.
+    if: ${{ !cancelled() && needs.publish-release.result == 'success' && !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     steps:
       - name: Check bucket token
@@ -758,7 +759,8 @@ jobs:
   publish-homebrew:
     needs: publish-release
     # Skip for pre-release tags — only stable releases bump the Homebrew tap.
-    if: ${{ !contains(github.ref_name, '-') }}
+    # Independent of the startup gate.
+    if: ${{ !cancelled() && needs.publish-release.result == 'success' && !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     steps:
       - name: Check tap token

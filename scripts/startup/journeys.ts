@@ -48,7 +48,11 @@ const CLEAN: LogPolicy = {allowedWarnings: [], allowedErrors: []}
 // name in the message is `latest*.yml` even when the configured channel is
 // `beta`.
 const UPDATER_META_404 = /Cannot find latest(?:-\w+)?\.yml/i
-const WITH_UPDATER_META_404: LogPolicy = {allowedWarnings: [], allowedErrors: [UPDATER_META_404]}
+// macOS asks /releases/latest before that yml exists. A draft is not a
+// production release, so GitHub answers 406 and the feed parser reports that
+// instead of the yml 404 the other platforms log.
+const UPDATER_NO_PRODUCTION_RELEASE = /Cannot parse releases feed:.*Unable to find latest version on GitHub.*HttpError: 406/
+const WITH_UPDATER_META_404: LogPolicy = {allowedWarnings: [], allowedErrors: [UPDATER_META_404, UPDATER_NO_PRODUCTION_RELEASE]}
 
 export const JOURNEYS: readonly StartupJourney[] = [
 	{id: 'fresh-cold', description: 'First launch ever: no profile, no runtime cache, managed yt-dlp downloaded from scratch.', profile: {kind: 'empty'}, env: {}, expect: 'main-screen', logPolicy: CLEAN, tierLogPolicies: {release: WITH_UPDATER_META_404}, tiers: ['pr', 'release', 'nightly']},

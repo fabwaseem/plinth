@@ -59,6 +59,22 @@ describe('journey catalog', () => {
 		}
 	})
 
+	it('waives the macOS 406 while the release gate’s draft is not a production release yet', () => {
+		const cleanLog = cleanStartupLog()
+		const updater406 =
+			'[2026-10-17 11:59:06.000] [error] [updater] Cannot parse releases feed: Error: Unable to find latest version on GitHub (https://github.com/fabwaseem/plinth/releases/latest), please ensure a production release exists: HttpError: 406\n[2026-10-17 11:59:06.001] [error] [updater] checkForUpdates failed Cannot parse releases feed: Error: Unable to find latest version on GitHub (https://github.com/fabwaseem/plinth/releases/latest), please ensure a production release exists: HttpError: 406'
+		for (const journey of journeysForTier('release')) {
+			const violations = inspectStartupLog(`${cleanLog}\n${updater406}`, journey.logPolicy)
+			expect(violations.filter(violation => violation.kind === 'error-line')).toEqual([])
+		}
+		for (const tier of ['pr', 'nightly'] as const) {
+			for (const journey of journeysForTier(tier)) {
+				const violations = inspectStartupLog(`${cleanLog}\n${updater406}`, journey.logPolicy)
+				expect(violations.filter(violation => violation.kind === 'error-line').length).toBe(2)
+			}
+		}
+	})
+
 	it('does NOT waive the updater metadata 404 outside the release tier — no draft release exists there', () => {
 		const cleanLog = cleanStartupLog()
 		const updater404 = '[2026-08-30 05:22:31.753] [error] (updater) Cannot find latest-mac.yml in the latest release artifacts: HttpError: 404'
