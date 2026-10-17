@@ -201,7 +201,7 @@ export function DownloadProfilesSettingsTab(): ReactNode {
 							</Button>
 						</div>
 						{cookiesMode === 'file' ? <WarningText text={t('wizard.url.cookies.risk')} /> : null}
-						{cookiesMode === 'file' || cookiesMode === 'browser' ? <WarningText text={t('wizard.url.cookies.banWarning')} /> : null}
+						{cookiesMode !== 'off' ? <WarningText text={t('wizard.url.cookies.banWarning')} /> : null}
 					</Field>
 
 					{cookiesMode === 'file' ? (

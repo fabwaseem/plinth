@@ -89,9 +89,7 @@ export function WizardPanel(): ReactNode {
 						</div>
 					)}
 
-					<div className={cn('min-w-0 flex-1', isDownloadHome && 'min-h-0 overflow-hidden')}>
-						{wizardStep === 'error' ? <StepError /> : activeDescriptor ? <Suspense fallback={<WizardStepFallback />}>{activeDescriptor.render()}</Suspense> : null}
-					</div>
+					<div className={cn('min-w-0 flex-1', isDownloadHome && 'min-h-0 overflow-hidden')}>{wizardStep === 'error' ? <StepError /> : activeDescriptor ? <Suspense fallback={<WizardStepFallback />}>{activeDescriptor.render()}</Suspense> : null}</div>
 				</div>
 			</WizardStage>
 			<MixedUrlPromptDialog />

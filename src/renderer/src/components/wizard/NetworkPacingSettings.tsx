@@ -1,5 +1,6 @@
 import {useState, type ReactNode} from 'react'
 import {useTranslation} from 'react-i18next'
+import {NETWORK_PACING_PRESET_VALUES} from '@shared/constants.js'
 import {pacingSleepSecondsSchema} from '@shared/schemas.js'
 import type {NetworkPacingPreset} from '@shared/types.js'
 import {useAppStore} from '../../store/useAppStore.js'

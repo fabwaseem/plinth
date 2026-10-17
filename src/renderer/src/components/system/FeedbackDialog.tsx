@@ -4,7 +4,7 @@ import {openTallyPopup} from '../../lib/tallyWidget.js'
 import {useAppStore} from '../../store/useAppStore.js'
 import {buildFeedbackHiddenFields} from './feedbackSnapshot.js'
 
-const TALLY_FEEDBACK_FORM_ID = "BE4bke";
+const TALLY_FEEDBACK_FORM_ID = 'BE4bke'
 const logger = log.scope('feedback')
 
 interface FeedbackDialogProps {

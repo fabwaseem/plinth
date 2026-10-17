@@ -232,7 +232,8 @@ function SimpleQuickDownload({
 	const [menuOpen, setMenuOpen] = useState(defaultProfileMenuOpen)
 	const {activeProfile} = model
 	const destinationLabel = destination?.trim()
-	const destinationDetailLabel = destinationDetail?.trim() || t('wizard.url.profile.destinationFallback')
+	const destinationDetailText = destinationDetail?.trim()
+	const destinationDetailLabel = destinationDetailText === undefined || destinationDetailText.length === 0 ? t('wizard.url.profile.destinationFallback') : destinationDetailText
 	const editActiveProfileLabel = t('wizard.url.profile.editActive')
 	const changeGlobalDestinationLabel = t('wizard.url.profile.changeGlobalDestination')
 

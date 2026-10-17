@@ -24,11 +24,11 @@ describe('DownloadProfilesHome action rows', () => {
 			</TooltipProvider>
 		)
 
-		const actionRows = screen.getByTestId('profiles-action-rows')
+		const actions = screen.getByTestId('profiles-active-profile-card')
 
-		expect(actionRows).toHaveClass('w-full')
-		expect(actionRows).toHaveClass('lg:grid-cols-[repeat(2,minmax(0,35rem))]')
-		expect(actionRows).toHaveClass('lg:justify-start')
+		expect(actions).toHaveClass('flex')
+		expect(actions).toHaveClass('flex-wrap')
+		expect(actions.className).not.toMatch(/grid-cols/)
 	})
 
 	it('keeps static supported-site proof out of the main URL workflow', () => {

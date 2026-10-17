@@ -11,7 +11,7 @@ import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, Di
 import {Empty, EmptyDescription, EmptyHeader, EmptyTitle} from '../ui/empty.js'
 import {Field, FieldLabel} from '../ui/field.js'
 import {Item, ItemActions, ItemContent, ItemGroup, ItemMedia, ItemTitle} from '../ui/item.js'
-import {Textarea} from '../ui/textarea.js'
+import {InputGroup, InputGroupTextarea} from '../ui/input-group.js'
 import {useAppStore} from '../../store/useAppStore.js'
 import {buildBulkUrlPreview} from './bulkUrlPreview.js'
 import {QuickProfileControl} from './QuickProfileControl.js'
@@ -93,9 +93,9 @@ export function BulkUrlDialog({open = false, onOpenChange, initialRaw = '', onEd
 		<div data-testid="bulk-url-dialog-body" className={cn('flex min-h-0 flex-col gap-4 overflow-y-auto px-1', embedded ? undefined : 'flex-1')}>
 			<Field className="gap-2">
 				<SectionLabel render={<FieldLabel htmlFor="bulk-url-textarea" />}>{t('wizard.bulk.textareaLabel')}</SectionLabel>
-				<div className="rounded-lg border border-[var(--field-border)] bg-[var(--field-bg)] shadow-[inset_0_1px_0_var(--field-highlight)] focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50">
-					<Textarea ref={textareaRef} id="bulk-url-textarea" data-testid="bulk-url-textarea" value={raw} onChange={event => setRaw(event.target.value)} placeholder={t('wizard.bulk.textareaPlaceholder')} spellCheck={false} className="h-40 resize-none overflow-y-auto rounded-[inherit] border-0 bg-transparent text-sm shadow-none focus-visible:border-transparent focus-visible:ring-0" />
-				</div>
+				<InputGroup className="focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50">
+					<InputGroupTextarea ref={textareaRef} id="bulk-url-textarea" data-testid="bulk-url-textarea" value={raw} onChange={event => setRaw(event.target.value)} placeholder={t('wizard.bulk.textareaPlaceholder')} spellCheck={false} className="h-40 overflow-y-auto text-sm" />
+				</InputGroup>
 			</Field>
 
 			<div className="flex items-center gap-3 text-xs text-muted-foreground">

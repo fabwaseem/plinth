@@ -16,14 +16,16 @@ beforeEach(() => {
 })
 
 describe('ExploreViewHost lifecycle', () => {
-	it('creates nothing until the view is first shown', async () => {
+	it('creates nothing until a navigation needs the view', async () => {
 		const h = makeHarness()
 		h.host.setBounds({x: 0, y: 40, width: 800, height: 600})
 		await h.host.setVisible(false)
-		await h.host.navigate({kind: 'home'})
 		expect(views).toHaveLength(0)
 		expect(h.session.getSession).not.toHaveBeenCalled()
 		expect(h.window.contentView.addChildView).not.toHaveBeenCalled()
+		// The launcher hides the view, so the first open has to build it.
+		await h.host.navigate({kind: 'home'})
+		expect(views).toHaveLength(1)
 	})
 
 	it('creates one locked-down view on the Explore session on first show and opens home', async () => {

@@ -19,11 +19,6 @@ describe('queue table preferences', () => {
 				columnOrder: ['finishedAt', 'bogus', 'title'],
 				columnVisibility: {title: false, status: false, formatLabel: false, bogus: true}
 			})
-		).toEqual({
-			version: 1,
-			sorting: [{id: 'finishedAt', desc: true}],
-			columnOrder: ['finishedAt', 'title', 'status', 'progressPercent', 'formatLabel', 'outputDir', 'addedAt'],
-			columnVisibility: {title: true, status: true, progressPercent: true, formatLabel: false, outputDir: true, addedAt: true, finishedAt: false}
-		})
+		).toEqual({version: 1, sorting: [{id: 'finishedAt', desc: true}], columnOrder: ['finishedAt', 'title', 'status', 'progressPercent', 'formatLabel', 'outputDir', 'addedAt'], columnVisibility: {title: true, status: true, progressPercent: true, formatLabel: false, outputDir: true, addedAt: true, finishedAt: false}})
 	})
 })
