@@ -45,11 +45,16 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" = "macOS" ]; then
-            exe=$(find dist -name "Plinth" -path "*/MacOS/Plinth" | head -1)
+            exe=$(find dist -type f \( -name "plinth" -o -name "Plinth" \) -path "*/Contents/MacOS/*" | head -1)
           elif [ "$RUNNER_OS" = "Windows" ]; then
             exe="dist/win-unpacked/Plinth.exe"
           else
             exe="dist/linux-unpacked/plinth"
+          fi
+          if [ -z "${exe:-}" ] || [ ! -e "$exe" ]; then
+            echo "::error::Could not locate packaged executable"
+            find dist -type f | sort
+            exit 1
           fi
           echo "PACKAGED_EXE=$GITHUB_WORKSPACE/$exe" >> "$GITHUB_ENV"
       - run: bunx playwright install chromium --with-deps

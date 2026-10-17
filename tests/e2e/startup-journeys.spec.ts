@@ -25,7 +25,8 @@ import {runJourney, type JourneyVerdict, type RunContext} from '../../scripts/st
 // `fresh-cold` in every shipped tier), so per-test parallelism would break the
 // seeding chain.
 // Verdict accounting — not Playwright test granularity — is the pass signal:
-// `checkVerdicts` below fails unless every declared journey reported.
+// `checkVerdicts` below fails unless every journey that ran reported. The first
+// stable tag has no predecessor, so inherited journeys are skipped then.
 // The tier arrives as `PLINTH_STARTUP_TIER` (pr | release | nightly) rather
 // than a CLI arg so the same spec serves all three workflows.
 test.setTimeout(35 * 60 * 1000)
@@ -56,7 +57,7 @@ test('every declared journey reaches its expected end state with clean logs', as
 	const archive = process.env.PLINTH_LOG_ARCHIVE
 	if (archive) fs.mkdirSync(archive, {recursive: true})
 
-	const journeys = journeysForTier(tier)
+	let journeys = journeysForTier(tier)
 	const problems = validateJourneySequence(journeys, tier)
 	if (problems.length > 0) throw new Error(`startup-journeys: tier "${tier}" is not runnable:\n  - ${problems.join('\n  - ')}`)
 
@@ -64,16 +65,21 @@ test('every declared journey reaches its expected end state with clean logs', as
 	// snapshotted under its own id. Cloning a fixed `profile-warm` directory in
 	// place would not survive two warm journeys in one tier.
 	const warmSources = new Map<string, string>()
-	const seedIds = new Set(journeys.flatMap(journey => (journey.profile.kind === 'warm' ? [journey.profile.from] : [])))
 
 	let inheritedSource = process.env.PLINTH_INHERITED_PROFILE
 	if (!inheritedSource && journeys.some(journey => journey.profile.kind === 'inherited')) {
 		const tags = execFileSync('git', ['tag', '--list', 'v*'], {encoding: 'utf8'}).split('\n').filter(Boolean)
 		const previous = previousStableTag(tags, process.env.GITHUB_REF_NAME ?? `v${process.env.npm_package_version ?? ''}`)
-		if (!previous) throw new Error('startup-journeys: no previous stable release found for the inherited journey')
-		console.log(`\n=== generating inherited profile from ${previous}`)
-		inheritedSource = await generateInheritedProfile(previous, path.join(baseDir, 'previous'))
+		if (!previous) {
+			console.log('\n=== no previous stable release; skipping inherited journeys')
+			journeys = journeys.filter(journey => journey.profile.kind !== 'inherited')
+		} else {
+			console.log(`\n=== generating inherited profile from ${previous}`)
+			inheritedSource = await generateInheritedProfile(previous, path.join(baseDir, 'previous'))
+		}
 	}
+
+	const seedIds = new Set(journeys.flatMap(journey => (journey.profile.kind === 'warm' ? [journey.profile.from] : [])))
 
 	const ctx: RunContext = {packagedExe, baseDir, inheritedSource, fakeToolsDir: writeFakeTools(path.join(baseDir, 'fake tools Ω'))}
 

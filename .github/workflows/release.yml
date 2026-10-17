@@ -102,11 +102,18 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" = "macOS" ]; then
-            exe=$(find dist -name "Plinth" -path "*/MacOS/Plinth" | head -1)
+            # executableName is plinth, so the bundle is plinth.app and the
+            # binary is Contents/MacOS/plinth. find -path is case-sensitive.
+            exe=$(find dist -type f \( -name "plinth" -o -name "Plinth" \) -path "*/Contents/MacOS/*" | head -1)
           elif [ "$RUNNER_OS" = "Windows" ]; then
             exe="dist/win-unpacked/Plinth.exe"
           else
             exe="dist/linux-unpacked/plinth"
+          fi
+          if [ -z "${exe:-}" ] || [ ! -e "$exe" ]; then
+            echo "::error::Could not locate packaged executable"
+            find dist -type f | sort
+            exit 1
           fi
           echo "PACKAGED_EXE=$GITHUB_WORKSPACE/$exe" >> "$GITHUB_ENV"
       - run: bunx playwright install chromium --with-deps
@@ -198,12 +205,15 @@ jobs:
           if [ "$RUNNER_OS" = "macOS" ]; then
             arch="$(uname -m)"
             if [ "$arch" = "arm64" ]; then
-              exe=$(find dist -name "Plinth" -path "*/mac-arm64/*.app/Contents/MacOS/Plinth" 2>/dev/null | head -1)
+              search="dist/mac-arm64"
             else
-              exe=$(find dist -name "Plinth" -path "*/mac/*.app/Contents/MacOS/Plinth" 2>/dev/null | head -1)
+              search="dist/mac"
             fi
+            # executableName is plinth. find -path is case-sensitive, so a
+            # pattern that ends in MacOS/Plinth misses Contents/MacOS/plinth.
+            exe=$(find "$search" -type f \( -name "plinth" -o -name "Plinth" \) -path "*/Contents/MacOS/*" 2>/dev/null | head -1)
             if [ -z "${exe:-}" ]; then
-              exe=$(find dist -name "Plinth" -path "*/Contents/MacOS/Plinth" 2>/dev/null | head -1)
+              exe=$(find dist -type f \( -name "plinth" -o -name "Plinth" \) -path "*/Contents/MacOS/*" 2>/dev/null | head -1)
             fi
           else
             exe=$(find dist -maxdepth 1 \( -name "Plinth-linux-x64.AppImage" -o -name "Plinth-linux-x86_64.AppImage" \) -print | head -1)
@@ -213,7 +223,7 @@ jobs:
           fi
           if [ -z "${exe:-}" ] || [ ! -e "$exe" ]; then
             echo "::error::Could not locate packaged smoke executable"
-            find dist -maxdepth 4 -type f | sort
+            find dist -type f | sort
             exit 1
           fi
           echo "PACKAGED_EXE=$GITHUB_WORKSPACE/$exe" >> "$GITHUB_ENV"
@@ -276,6 +286,9 @@ jobs:
 
   publish-release:
     needs: [build, upload-flatpak]
+    # A skipped Flatpak (no signing key on this repo) must not block the
+    # GitHub release. A failed Flatpak still blocks it.
+    if: ${{ !cancelled() && needs.build.result == 'success' && (needs.upload-flatpak.result == 'success' || needs.upload-flatpak.result == 'skipped') }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -416,8 +429,14 @@ jobs:
             --pattern "Plinth-mac-arm64.dmg" \
             --pattern "Plinth-mac-x64.dmg" \
             --pattern "Plinth-linux-x64.AppImage" \
-            --pattern "Plinth-linux-x64.tar.gz" \
-            --pattern "Plinth-linux-x64.flatpak"
+            --pattern "Plinth-linux-x64.tar.gz"
+
+          # Signed only when FLATPAK_GPG_PRIVATE_KEY is configured. Hash it
+          # when the upload landed; a release without that secret still publishes.
+          gh release download "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --dir artifacts \
+            --pattern "Plinth-linux-x64.flatpak" || true
 
           required=(
             "Plinth-win-x64-Setup.exe"
@@ -426,7 +445,6 @@ jobs:
             "Plinth-mac-x64.dmg"
             "Plinth-linux-x64.AppImage"
             "Plinth-linux-x64.tar.gz"
-            "Plinth-linux-x64.flatpak"
           )
           for file in "${required[@]}"; do
             if [ ! -f "artifacts/${file}" ]; then
@@ -449,9 +467,10 @@ jobs:
         # /releases/latest, which excludes pre-releases — existing user installs
         # do NOT auto-update. Manual install from the release page works for
         # internal testing. Stable tags (e.g. v0.4.0) un-draft as full release
-        # and trigger normal user auto-update.
+        # and trigger normal user auto-update. WINGET_TOKEN is optional; the
+        # workflow token created this draft and can publish it.
         env:
-          GH_TOKEN: ${{ secrets.WINGET_TOKEN }}
+          GH_TOKEN: ${{ secrets.WINGET_TOKEN || github.token }}
           REF_NAME: ${{ github.ref_name }}
         run: |
           EXTRA=""
@@ -489,6 +508,8 @@ jobs:
     # GitHub Pages by `publish-flatpak-repo` for stable tags) and builds the
     # release bundle, which carries that repo so `flatpak update` works after a
     # bundle install. Not published to Flathub; no manifest changes go to main.
+    # `enabled` is false when the signing key is not configured, so the job
+    # succeeds without producing an artifact and the GitHub release still publishes.
     #
     # Runs after `build` (through fetch-flatpak-source) so Flatpak can be
     # uploaded before `publish-release` generates SHA256SUMS. The tar.gz hash is computed directly from the
@@ -496,6 +517,8 @@ jobs:
     # from the final publish gate.
     needs: fetch-flatpak-source
     runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.signing.outputs.enabled }}
     # Read-only: this job runs the Flatpak build and holds the repo signing key.
     # The tarball comes from fetch-flatpak-source; upload-flatpak and
     # publish-flatpak-repo do the publishing.
@@ -505,17 +528,31 @@ jobs:
       image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-24.08
       options: --privileged
     steps:
+      - name: Check Flatpak signing key
+        id: signing
+        env:
+          FLATPAK_GPG_PRIVATE_KEY: ${{ secrets.FLATPAK_GPG_PRIVATE_KEY }}
+        run: |
+          if [ -z "$FLATPAK_GPG_PRIVATE_KEY" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "FLATPAK_GPG_PRIVATE_KEY is not set; skipping the Flatpak."
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.signing.outputs.enabled == 'true'
         with:
           # Need full tag history so render-flatpak-manifest.py can read tagger
           # dates of prior v* tags to render the metainfo <releases> block.
           fetch-depth: 0
           fetch-tags: true
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        if: steps.signing.outputs.enabled == 'true'
         with:
           name: flatpak-source
           path: flatpak
       - name: Render manifest for this release
+        if: steps.signing.outputs.enabled == 'true'
         run: |
           # The flatpak-builder container runs as a different user than the
           # workspace owner; without this, git refuses to read the repo with
@@ -533,6 +570,7 @@ jobs:
             --metainfo-template flatpak/io.github.fabwaseem.Plinth.metainfo.xml.in \
             --metainfo-output flatpak/io.github.fabwaseem.Plinth.metainfo.xml
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        if: steps.signing.outputs.enabled == 'true'
         with:
           manifest-path: flatpak/io.github.fabwaseem.Plinth.yml
           # The bundle comes from scripts/flatpak/publish-repo.sh below, which
@@ -544,6 +582,7 @@ jobs:
           # manifest or electron build inputs change.
           cache-key: flatpak-builder-${{ hashFiles('flatpak/**', 'electron-builder.json5', 'package.json') }}
       - name: Import Flatpak repo signing key
+        if: steps.signing.outputs.enabled == 'true'
         # The key signs every commit and the repo summary; installed copies
         # refuse updates that it did not sign. Created once with
         # scripts/flatpak/create-signing-key.sh (see dev-docs/flatpak-repo.md).
@@ -569,6 +608,7 @@ jobs:
           echo "FLATPAK_GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
           echo "FLATPAK_GPG_KEY=$KEY" >> "$GITHUB_ENV"
       - name: Sign, publish the Flatpak repo, build the bundle
+        if: steps.signing.outputs.enabled == 'true'
         # Prerelease bundles leave the repo out: the repo carries stable
         # releases only, and `flatpak update` must not move a beta tester onto it.
         env:
@@ -580,18 +620,20 @@ jobs:
           bash scripts/flatpak/publish-repo.sh --repo repo --site flatpak-site/flatpak --url "$FLATPAK_REPO_URL" \
             --gpg-key "$FLATPAK_GPG_KEY" --gpg-homedir "$FLATPAK_GNUPGHOME" --bundle plinth.flatpak "${extra[@]}"
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: steps.signing.outputs.enabled == 'true'
         with:
           name: plinth-x86_64.flatpak
           path: plinth.flatpak
           if-no-files-found: error
       - name: Upload Flatpak repo for GitHub Pages
-        if: ${{ !contains(github.ref_name, '-') }}
+        if: ${{ steps.signing.outputs.enabled == 'true' && !contains(github.ref_name, '-') }}
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: flatpak-site
 
   upload-flatpak:
     needs: build-flatpak
+    if: ${{ needs.build-flatpak.result == 'success' && needs.build-flatpak.outputs.enabled == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -622,7 +664,7 @@ jobs:
     # `flatpak update` or GNOME Software. Stable releases only, and only after
     # the GitHub Release is public, so the repo never runs ahead of it.
     needs: [publish-release, build-flatpak]
-    if: ${{ !contains(github.ref_name, '-') }}
+    if: ${{ !cancelled() && needs.publish-release.result == 'success' && needs.build-flatpak.outputs.enabled == 'true' && !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -646,6 +688,10 @@ jobs:
           GH_TOKEN: ${{ secrets.PLINTH_WEB_DISPATCH_TOKEN || secrets.WINGET_TOKEN }}
           REF_NAME: ${{ github.ref_name }}
         run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "No dispatch token configured; skipping the landing-page refresh."
+            exit 0
+          fi
           gh api repos/fabwaseem/plinth-web/dispatches \
             --method POST \
             -f event_type=plinth-release \
@@ -659,16 +705,30 @@ jobs:
     if: ${{ !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     steps:
+      - name: Check bucket token
+        id: token
+        env:
+          TOKEN: ${{ secrets.WINGET_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "WINGET_TOKEN is not set; skipping the Scoop bucket."
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Checkout bucket
+        if: steps.token.outputs.enabled == 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: fabwaseem/scoop-bucket
           token: ${{ secrets.WINGET_TOKEN }}
       - name: Download SHA256SUMS
+        if: steps.token.outputs.enabled == 'true'
         run: gh release download ${{ github.ref_name }} --repo ${{ github.repository }} --pattern SHA256SUMS
         env:
           GH_TOKEN: ${{ secrets.WINGET_TOKEN }}
       - name: Update manifest
+        if: steps.token.outputs.enabled == 'true'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           PORTABLE="Plinth-win-x64-Portable.exe"
@@ -687,6 +747,7 @@ jobs:
             bucket/plinth.json > bucket/plinth.json.tmp
           mv bucket/plinth.json.tmp bucket/plinth.json
       - name: Commit & push
+        if: steps.token.outputs.enabled == 'true'
         run: |
           git config user.name "plinth-release-bot"
           git config user.email "release@plinth.local"
@@ -700,16 +761,30 @@ jobs:
     if: ${{ !contains(github.ref_name, '-') }}
     runs-on: ubuntu-latest
     steps:
+      - name: Check tap token
+        id: token
+        env:
+          TOKEN: ${{ secrets.WINGET_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "WINGET_TOKEN is not set; skipping the Homebrew tap."
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Checkout tap
+        if: steps.token.outputs.enabled == 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: fabwaseem/homebrew-plinth
           token: ${{ secrets.WINGET_TOKEN }}
       - name: Download SHA256SUMS
+        if: steps.token.outputs.enabled == 'true'
         run: gh release download ${{ github.ref_name }} --repo ${{ github.repository }} --pattern SHA256SUMS
         env:
           GH_TOKEN: ${{ secrets.WINGET_TOKEN }}
       - name: Update cask
+        if: steps.token.outputs.enabled == 'true'
         # We ship two arch-specific DMGs (arm64 + x64) instead of a universal
         # build, so the cask uses on_arm / on_intel stanzas. The whole file is
         # rewritten on each release because the structure has more moving
@@ -769,6 +844,7 @@ jobs:
           end
           EOF
       - name: Validate the generated cask
+        if: steps.token.outputs.enabled == 'true'
         # Nothing downstream parses this file before users do, so a malformed
         # heredoc would push a broken cask to the tap with a green job. Syntax
         # first, then confirm the quarantine strip actually survived rendering
@@ -782,6 +858,7 @@ jobs:
           grep -q "version \"${GITHUB_REF_NAME#v}\"" Casks/plinth.rb
           echo "cask OK"
       - name: Commit & push
+        if: steps.token.outputs.enabled == 'true'
         run: |
           git config user.name "plinth-release-bot"
           git config user.email "release@plinth.local"
