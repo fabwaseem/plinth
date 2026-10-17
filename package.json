@@ -3,6 +3,14 @@
 	"version": "1.0.0",
 	"private": true,
 	"description": "Plinth - YouTube downloader app",
+	"homepage": "https://plinth.fabwaseem.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/fabwaseem/plinth.git"
+	},
+	"bugs": {
+		"url": "https://github.com/fabwaseem/plinth/issues"
+	},
 	"license": "MIT",
 	"author": {
 		"name": "Waseem Anjum",
