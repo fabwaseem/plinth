@@ -184,4 +184,7 @@ bun run scan-upstream  # re-scan upstream yt-dlp source
 
 ## License
 
-MIT © Waseem Anjum
+MIT
+
+Copyright (c) 2026 Antonio Orionus
+Copyright (c) 2026 Waseem Anjum

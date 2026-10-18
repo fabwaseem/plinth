@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "Gabatee cinaa",
 		"navLayoutPill": "Gabatee gubbaa"
 	},
-	"about": {"button": "Waa'ee", "openTitle": "Waa'ee Plinth", "tagline": "YouTube fi marsariitota 2000+ biroo irraa buusuuf meeshaa ariifataa fi salphaa.", "websiteLink": "Marsariitii", "githubLink": "GitHub", "licenseLine": "Heeyyama MIT · by Waseem Anjum", "thirdPartyNotices": "Beeksisa seera-biroo ilaali"},
+	"about": {
+		"button": "Waa'ee",
+		"openTitle": "Waa'ee Plinth",
+		"tagline": "YouTube fi marsariitota 2000+ biroo irraa buusuuf meeshaa ariifataa fi salphaa.",
+		"websiteLink": "Marsariitii",
+		"githubLink": "GitHub",
+		"licenseLine": "Heeyyama MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "Beeksisa seera-biroo ilaali"
+	},
 	"titleBar": {"close": "Cufii", "minimize": "Xiqqeessi", "maximize": "Guddisi", "restore": "Deebi'si"},
 	"splash": {
 		"greeting": "Baga nagaan deebitee!",

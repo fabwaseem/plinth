@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "Seitenleiste",
 		"navLayoutPill": "Obere Leiste"
 	},
-	"about": {"button": "Info", "openTitle": "Über Plinth", "tagline": "Schneller, freundlicher Downloader für YouTube und über 2000 weitere Seiten.", "websiteLink": "Website", "githubLink": "GitHub", "licenseLine": "MIT-Lizenz · von Waseem Anjum", "thirdPartyNotices": "Drittanbieter-Hinweise anzeigen"},
+	"about": {
+		"button": "Info",
+		"openTitle": "Über Plinth",
+		"tagline": "Schneller, freundlicher Downloader für YouTube und über 2000 weitere Seiten.",
+		"websiteLink": "Website",
+		"githubLink": "GitHub",
+		"licenseLine": "MIT-Lizenz · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "Drittanbieter-Hinweise anzeigen"
+	},
 	"titleBar": {"close": "Schließen", "minimize": "Minimieren", "maximize": "Maximieren", "restore": "Wiederherstellen"},
 	"splash": {
 		"greeting": "Hey, schön dich wiederzusehen!",

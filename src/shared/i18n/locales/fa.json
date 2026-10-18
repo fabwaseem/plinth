@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "نوار کناری",
 		"navLayoutPill": "نوار بالا"
 	},
-	"about": {"button": "درباره", "openTitle": "دربارهٔ Plinth", "tagline": "دانلودری سریع و ساده برای YouTube و بیش از ۲۰۰۰ سایت دیگر.", "websiteLink": "وب‌سایت", "githubLink": "GitHub", "licenseLine": "مجوز MIT · ساختهٔ Waseem Anjum", "thirdPartyNotices": "مشاهدهٔ اعلان‌های شخص ثالث"},
+	"about": {
+		"button": "درباره",
+		"openTitle": "دربارهٔ Plinth",
+		"tagline": "دانلودری سریع و ساده برای YouTube و بیش از ۲۰۰۰ سایت دیگر.",
+		"websiteLink": "وب‌سایت",
+		"githubLink": "GitHub",
+		"licenseLine": "مجوز MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "مشاهدهٔ اعلان‌های شخص ثالث"
+	},
 	"titleBar": {"close": "بستن", "minimize": "کمینه کردن", "maximize": "بیشینه کردن", "restore": "بازگردانی"},
 	"splash": {
 		"greeting": "سلام، خوش آمدید!",

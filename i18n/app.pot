@@ -15,7 +15,7 @@ msgid "GitHub"
 msgstr ""
 
 msgctxt "about.licenseLine"
-msgid "MIT License · by Waseem Anjum"
+msgid "MIT License · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum"
 msgstr ""
 
 msgctxt "about.openTitle"

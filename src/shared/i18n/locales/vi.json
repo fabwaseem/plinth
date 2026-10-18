@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "Thanh bên",
 		"navLayoutPill": "Thanh trên"
 	},
-	"about": {"button": "Giới thiệu", "openTitle": "Giới thiệu về Plinth", "tagline": "Trình tải xuống nhanh, thân thiện cho YouTube và hơn 2000 trang web khác.", "websiteLink": "Trang web", "githubLink": "GitHub", "licenseLine": "Giấy phép MIT · bởi Waseem Anjum", "thirdPartyNotices": "Xem thông báo bên thứ ba"},
+	"about": {
+		"button": "Giới thiệu",
+		"openTitle": "Giới thiệu về Plinth",
+		"tagline": "Trình tải xuống nhanh, thân thiện cho YouTube và hơn 2000 trang web khác.",
+		"websiteLink": "Trang web",
+		"githubLink": "GitHub",
+		"licenseLine": "Giấy phép MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "Xem thông báo bên thứ ba"
+	},
 	"titleBar": {"close": "Đóng", "minimize": "Thu nhỏ", "maximize": "Phóng to", "restore": "Khôi phục"},
 	"splash": {
 		"greeting": "Xin chào, chào mừng bạn quay lại!",

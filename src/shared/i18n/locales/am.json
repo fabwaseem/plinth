@@ -12,7 +12,7 @@
 		"navLayoutSidebar": "የጎን አሞሌ",
 		"navLayoutPill": "የላይ አሞሌ"
 	},
-	"about": {"button": "ስለ", "openTitle": "ስለ Plinth", "tagline": "ለYouTube እና ለ2000+ ሌሎች ጣቢያዎች ፈጣን እና ምቹ አውርጅ።", "websiteLink": "ድረ-ገጽ", "githubLink": "GitHub", "licenseLine": "MIT ፈቃድ · በ Waseem Anjum", "thirdPartyNotices": "የሦስተኛ ወገን ማስታወቂያዎችን ይመልከቱ"},
+	"about": {"button": "ስለ", "openTitle": "ስለ Plinth", "tagline": "ለYouTube እና ለ2000+ ሌሎች ጣቢያዎች ፈጣን እና ምቹ አውርጅ።", "websiteLink": "ድረ-ገጽ", "githubLink": "GitHub", "licenseLine": "MIT ፈቃድ · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "የሦስተኛ ወገን ማስታወቂያዎችን ይመልከቱ"},
 	"titleBar": {"close": "ዝጋ", "minimize": "አሳንስ", "maximize": "አሰፋ", "restore": "መልስ"},
 	"splash": {
 		"greeting": "እንኳን ደህና መጡ!",

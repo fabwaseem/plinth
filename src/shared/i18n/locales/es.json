@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "Barra lateral",
 		"navLayoutPill": "Barra superior"
 	},
-	"about": {"button": "Acerca de", "openTitle": "Acerca de Plinth", "tagline": "Descargador rápido y amigable para YouTube y más de 2000 sitios.", "websiteLink": "Sitio web", "githubLink": "GitHub", "licenseLine": "Licencia MIT · por Waseem Anjum", "thirdPartyNotices": "Ver avisos de terceros"},
+	"about": {
+		"button": "Acerca de",
+		"openTitle": "Acerca de Plinth",
+		"tagline": "Descargador rápido y amigable para YouTube y más de 2000 sitios.",
+		"websiteLink": "Sitio web",
+		"githubLink": "GitHub",
+		"licenseLine": "Licencia MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "Ver avisos de terceros"
+	},
 	"titleBar": {"close": "Cerrar", "minimize": "Minimizar", "maximize": "Maximizar", "restore": "Restaurar"},
 	"splash": {
 		"greeting": "¡Hey, bienvenido de vuelta!",

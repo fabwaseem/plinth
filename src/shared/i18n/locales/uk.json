@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "Бічна панель",
 		"navLayoutPill": "Верхня панель"
 	},
-	"about": {"button": "Про програму", "openTitle": "Про програму Plinth", "tagline": "Швидкий і зручний завантажувач для YouTube та ще 2000+ сайтів.", "websiteLink": "Сайт", "githubLink": "GitHub", "licenseLine": "Ліцензія MIT · by Waseem Anjum", "thirdPartyNotices": "Переглянути повідомлення про сторонні компоненти"},
+	"about": {
+		"button": "Про програму",
+		"openTitle": "Про програму Plinth",
+		"tagline": "Швидкий і зручний завантажувач для YouTube та ще 2000+ сайтів.",
+		"websiteLink": "Сайт",
+		"githubLink": "GitHub",
+		"licenseLine": "Ліцензія MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "Переглянути повідомлення про сторонні компоненти"
+	},
 	"titleBar": {"close": "Закрити", "minimize": "Згорнути", "maximize": "Розгорнути", "restore": "Відновити"},
 	"splash": {
 		"greeting": "Привіт, з поверненням!",

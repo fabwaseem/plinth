@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "Kenar çubuğu",
 		"navLayoutPill": "Üst çubuk"
 	},
-	"about": {"button": "Hakkında", "openTitle": "Plinth Hakkında", "tagline": "YouTube ve 2000+ diğer site için hızlı, dost canlısı indirici.", "websiteLink": "Web sitesi", "githubLink": "GitHub", "licenseLine": "MIT Lisansı · Waseem Anjum tarafından", "thirdPartyNotices": "Üçüncü taraf bildirimlerini görüntüle"},
+	"about": {
+		"button": "Hakkında",
+		"openTitle": "Plinth Hakkında",
+		"tagline": "YouTube ve 2000+ diğer site için hızlı, dost canlısı indirici.",
+		"websiteLink": "Web sitesi",
+		"githubLink": "GitHub",
+		"licenseLine": "MIT Lisansı · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "Üçüncü taraf bildirimlerini görüntüle"
+	},
 	"titleBar": {"close": "Kapat", "minimize": "Simge durumuna küçült", "maximize": "Büyüt", "restore": "Geri yükle"},
 	"splash": {
 		"greeting": "Selam, tekrar hoş geldin!",

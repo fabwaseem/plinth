@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "Бочна трака",
 		"navLayoutPill": "Горња трака"
 	},
-	"about": {"button": "О апликацији", "openTitle": "О апликацији Plinth", "tagline": "Брз и приступачан преузимач за YouTube и још 2000+ сајтова.", "websiteLink": "Веб-сајт", "githubLink": "GitHub", "licenseLine": "Лиценца MIT · by Waseem Anjum", "thirdPartyNotices": "Прикажи обавештења о компонентама трећих страна"},
+	"about": {
+		"button": "О апликацији",
+		"openTitle": "О апликацији Plinth",
+		"tagline": "Брз и приступачан преузимач за YouTube и још 2000+ сајтова.",
+		"websiteLink": "Веб-сајт",
+		"githubLink": "GitHub",
+		"licenseLine": "Лиценца MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "Прикажи обавештења о компонентама трећих страна"
+	},
 	"titleBar": {"close": "Затвори", "minimize": "Минимизуј", "maximize": "Максимизуј", "restore": "Врати"},
 	"splash": {
 		"greeting": "Добродошао/ла назад!",

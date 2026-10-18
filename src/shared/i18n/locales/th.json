@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "แถบด้านข้าง",
 		"navLayoutPill": "แถบด้านบน"
 	},
-	"about": {"button": "เกี่ยวกับ", "openTitle": "เกี่ยวกับ Plinth", "tagline": "เครื่องมือดาวน์โหลดที่รวดเร็วและใช้งานง่ายสำหรับ YouTube และเว็บไซต์อื่นกว่า 2000 แห่ง", "websiteLink": "เว็บไซต์", "githubLink": "GitHub", "licenseLine": "สัญญาอนุญาต MIT · โดย Waseem Anjum", "thirdPartyNotices": "ดูประกาศของบุคคลที่สาม"},
+	"about": {
+		"button": "เกี่ยวกับ",
+		"openTitle": "เกี่ยวกับ Plinth",
+		"tagline": "เครื่องมือดาวน์โหลดที่รวดเร็วและใช้งานง่ายสำหรับ YouTube และเว็บไซต์อื่นกว่า 2000 แห่ง",
+		"websiteLink": "เว็บไซต์",
+		"githubLink": "GitHub",
+		"licenseLine": "สัญญาอนุญาต MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "ดูประกาศของบุคคลที่สาม"
+	},
 	"titleBar": {"close": "ปิด", "minimize": "ย่อเล็กสุด", "maximize": "ขยายใหญ่สุด", "restore": "คืนค่า"},
 	"splash": {
 		"greeting": "ยินดีต้อนรับกลับมา!",
