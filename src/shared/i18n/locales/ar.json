@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "الشريط الجانبي",
 		"navLayoutPill": "الشريط العلوي"
 	},
-	"about": {"button": "حول", "openTitle": "حول Plinth", "tagline": "محمّل سريع وسهل الاستخدام لـ YouTube وأكثر من 2000 موقع آخر.", "websiteLink": "موقع الويب", "githubLink": "GitHub", "licenseLine": "ترخيص MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "عرض إشعارات الطرف الثالث"},
+	"about": {
+		"button": "حول",
+		"openTitle": "حول Plinth",
+		"tagline": "محمّل سريع وسهل الاستخدام لـ YouTube وأكثر من 2000 موقع آخر.",
+		"websiteLink": "موقع الويب",
+		"githubLink": "GitHub",
+		"licenseLine": "ترخيص MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "عرض إشعارات الطرف الثالث"
+	},
 	"titleBar": {"close": "إغلاق", "minimize": "تصغير", "maximize": "تكبير", "restore": "استعادة"},
 	"splash": {
 		"greeting": "مرحباً، أهلاً بعودتك!",

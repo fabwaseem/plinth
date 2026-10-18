@@ -4,10 +4,6 @@
 	"private": true,
 	"description": "Plinth - YouTube downloader app",
 	"homepage": "https://plinth.fabwaseem.com",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/fabwaseem/plinth.git"
-	},
 	"bugs": {
 		"url": "https://github.com/fabwaseem/plinth/issues"
 	},
@@ -15,6 +11,10 @@
 	"author": {
 		"name": "Waseem Anjum",
 		"url": "https://github.com/fabwaseem"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/fabwaseem/plinth.git"
 	},
 	"workspaces": [
 		"packages/*"

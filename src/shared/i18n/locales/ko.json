@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "사이드바",
 		"navLayoutPill": "상단 바"
 	},
-	"about": {"button": "정보", "openTitle": "Plinth 정보", "tagline": "YouTube 및 2000개 이상의 사이트를 위한 빠르고 편리한 다운로더입니다.", "websiteLink": "웹사이트", "githubLink": "GitHub", "licenseLine": "MIT 라이선스 · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "타사 고지 사항 보기"},
+	"about": {
+		"button": "정보",
+		"openTitle": "Plinth 정보",
+		"tagline": "YouTube 및 2000개 이상의 사이트를 위한 빠르고 편리한 다운로더입니다.",
+		"websiteLink": "웹사이트",
+		"githubLink": "GitHub",
+		"licenseLine": "MIT 라이선스 · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "타사 고지 사항 보기"
+	},
 	"titleBar": {"close": "닫기", "minimize": "최소화", "maximize": "최대화", "restore": "복원"},
 	"splash": {
 		"greeting": "다시 오신 것을 환영합니다!",

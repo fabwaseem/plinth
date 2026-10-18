@@ -12,7 +12,15 @@
 		"navLayoutSidebar": "Боковая панель",
 		"navLayoutPill": "Верхняя панель"
 	},
-	"about": {"button": "О программе", "openTitle": "О программе Plinth", "tagline": "Быстрый и удобный загрузчик для YouTube и ещё 2000+ сайтов.", "websiteLink": "Сайт", "githubLink": "GitHub", "licenseLine": "Лицензия MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "Просмотреть уведомления о сторонних компонентах"},
+	"about": {
+		"button": "О программе",
+		"openTitle": "О программе Plinth",
+		"tagline": "Быстрый и удобный загрузчик для YouTube и ещё 2000+ сайтов.",
+		"websiteLink": "Сайт",
+		"githubLink": "GitHub",
+		"licenseLine": "Лицензия MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum",
+		"thirdPartyNotices": "Просмотреть уведомления о сторонних компонентах"
+	},
 	"titleBar": {"close": "Закрыть", "minimize": "Свернуть", "maximize": "Развернуть", "restore": "Восстановить"},
 	"splash": {
 		"greeting": "Привет, с возвращением!",
