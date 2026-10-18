@@ -104,7 +104,12 @@ function relocateTranslationAssets(markdown) {
 
 function placeDonateLinks(markdown, locale) {
   const href = locale.code === "en" ? "docs/DONATE.md" : "../../docs/DONATE.md";
-  return markdown.replaceAll("](DONATE.md)", `](${href})`).replaceAll('href="DONATE.md"', `href="${href}"`).replaceAll('href="docs/DONATE.md"', `href="${href}"`);
+  const signing = locale.code === "en" ? "docs/CODE_SIGNING.md" : "../../docs/CODE_SIGNING.md";
+  return markdown
+    .replaceAll("](DONATE.md)", `](${href})`)
+    .replaceAll('href="DONATE.md"', `href="${href}"`)
+    .replaceAll('href="docs/DONATE.md"', `href="${href}"`)
+    .replaceAll("](CODE_SIGNING.md)", `](${signing})`);
 }
 
 function outputPath(locale) {

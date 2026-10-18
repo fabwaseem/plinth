@@ -170,9 +170,10 @@ curl -fsSL https://raw.githubusercontent.com/fabwaseem/plinth/main/scripts/insta
 1. {{dl_macos_sequoia_step1}}
 2. {{dl_macos_sequoia_step2}}
 
+**{{dl_macos_damaged_h4}}**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 {{dl_macos_damaged_p}}
@@ -186,6 +187,17 @@ open /Applications/Plinth.app
 {{dl_warning_p1}}
 
 {{dl_warning_p2}}
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>{{dl_linux_first_h3}}
 

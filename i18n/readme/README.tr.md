@@ -10,7 +10,7 @@
 
 Plinth sana zaman kazandırıyorsa, bir ⭐ başkalarının onu bulmasına yardım eder.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 Bu, yapay zeka destekli bir çeviridir. [İngilizce README](README.md) gerçek kaynak kabul edilir. Hata mı gördün? [PR'lar memnuniyetle karşılanır](../../pulls).
 
@@ -170,9 +170,10 @@ Plinth henüz macOS için kod imzalı değildir, bu yüzden Gatekeeper DMG'den k
 1. Bağlanan DMG'den `Plinth.app` dosyasını `/Applications` içine sürükle.
 2. Terminal'i aç ve şu iki komutu çalıştır:
 
+**Gatekeeper karantina düzeltmesi**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 İlk komut kurulu Plinth kopyandan karantina özniteliğini kaldırır. İkinci komut uygulamayı başlatır. `sudo` Mac parolanı isteyebilir; Terminal yazarken karakterleri göstermez.
@@ -190,6 +191,17 @@ Plinth'yi kendin doğrulamanın giderek daha sıkı üç yolu:
 - **Kaynağı oku.** Her satır [GitHub](https://github.com/fabwaseem/plinth) üzerinde ve [kaynaktan derleyebilirsin](#tech).
 - **SHA256 kontrol et.** Dosyanı yayımlanan [`SHA256SUMS`](https://github.com/fabwaseem/plinth/releases/latest/download/SHA256SUMS) ile eşleştir — aşağıdaki [İndirmeni doğrula](#verify) bölümüne bak.
 - **Üçüncü taraf taraması yap.** Dosyayı [VirusTotal](https://www.virustotal.com) üzerine yükle.
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux ilk başlatma
 

@@ -242,7 +242,7 @@ export const en = {
     "**Recommendation:** use the NSIS installer for auto-updates and faster startup. Use the portable `.exe` for a no-install, no-registry option.",
   dl_win_smartscreen_h4: "Windows SmartScreen warning",
   dl_win_smartscreen_intro:
-    'On first launch you may see **"Windows protected your PC"** or **"Unknown publisher."** This applies to both `Plinth-win-x64-Setup.exe` and `Plinth-win-x64-Portable.exe`. Plinth is free and open-source and the Windows builds are not code-signed with a paid certificate, which is why SmartScreen flags them. It does **not** automatically mean Plinth is unsafe. To continue:',
+    'On first launch you may see **"Windows protected your PC"** or **"Unknown publisher."** This applies to both `Plinth-win-x64-Setup.exe` and `Plinth-win-x64-Portable.exe`. Windows builds are published unsigned until the SignPath secret and repository variables in the [code signing policy](#code-signing-policy) are set. After that, a SignPath Foundation signature can still take time to earn SmartScreen reputation. The warning means Windows does not recognize the publisher yet. To continue:',
   dl_win_smartscreen_step1: "Click **More info**.",
   dl_win_smartscreen_step2: "Click **Run anyway**.",
   dl_win_smartscreen_official:
@@ -276,7 +276,7 @@ export const en = {
   dl_linux_arch_note: "**The Linux downloads on the release page are x86_64 only.** On ARM64 machines (Raspberry Pi, Asahi Linux) the Flatpak still installs, then fails at launch with `bwrap: execvp ldconfig: Exec format error`.",
   dl_warning_h3: "Why you may see a warning",
   dl_warning_p1:
-    "Plinth is open-source and MIT-licensed. The Windows and macOS builds are **not code-signed** — Apple Developer ID and Windows EV code-signing certificates each cost hundreds of dollars per year, which an indie project pays out of pocket. Without those signatures, Windows SmartScreen and macOS Gatekeeper will warn you on first launch. The warnings mean *your OS doesn't recognize the publisher* — they don't mean Plinth is malware.",
+    "Plinth is open-source and MIT-licensed. The macOS build is ad-hoc signed and is not notarized, because notarization requires a paid Apple Developer account. Windows builds are published unsigned until the SignPath configuration in the [code signing policy](#code-signing-policy) is in place. Until the operating system recognizes the publisher, Windows SmartScreen and macOS Gatekeeper warn on first launch. The warnings mean the operating system does not recognize the publisher.",
   dl_warning_p2:
     "Three ways to verify Plinth yourself, in increasing rigor:\n\n- **Read the source.** Every line is on [GitHub](https://github.com/fabwaseem/plinth) and you can [build it from source](#tech).\n- **Check the SHA256.** Match your file against the published [`SHA256SUMS`](https://github.com/fabwaseem/plinth/releases/latest/download/SHA256SUMS) — see [Verify your download](#verify) below.\n- **Run a third-party scan.** Upload the file to [VirusTotal](https://www.virustotal.com).",
 
@@ -287,18 +287,18 @@ export const en = {
     'SmartScreen dialog after expanding More info, showing the "Run anyway" button',
   dl_win_defender_h4: "If Windows Defender flags or removes the file",
   dl_win_defender_p:
-    "Defender heuristics sometimes flag unsigned NSIS installers and Electron portables as suspicious. If Defender quarantines `Plinth-win-x64-Setup.exe` or `Plinth-win-x64-Portable.exe`, restore it from **Windows Security → Virus & threat protection → Protection history**, then add the Plinth executable as an allowed item under **Manage settings → Add or remove exclusions**. As with SmartScreen, the trigger is the missing publisher signature, not detected malware.",
+    "Defender heuristics sometimes flag NSIS installers and Electron portables as suspicious. If Defender quarantines `Plinth-win-x64-Setup.exe` or `Plinth-win-x64-Portable.exe`, restore it from **Windows Security → Virus & threat protection → Protection history**, then add the Plinth executable as an allowed item under **Manage settings → Add or remove exclusions**. As with SmartScreen, the trigger while Windows builds are published unsigned is an unrecognized publisher.",
 
-  dl_macos_first_h3: "macOS first launch",
+  dl_macos_first_h3: "Installing on macOS",
   dl_macos_intro:
-    "Plinth's macOS builds are ad-hoc signed but not notarized by Apple, so Gatekeeper blocks the first launch with *\"Plinth.app\" Not Opened — Apple could not verify \"Plinth.app\" is free of malware*. That means macOS cannot check the app with Apple, not that anything is wrong with the files. Installing with Homebrew avoids this dialog entirely. If you used the DMG, one Terminal command clears it:",
+    'Drag `Plinth.app` from the mounted DMG into `/Applications`. Plinth is open source. The macOS build is ad-hoc signed, so Apple Silicon does not report it as damaged. It is unnotarized because notarization requires a paid Apple Developer account, and there is no free notarization. On first launch, if you see **"Apple could not verify Plinth"**:',
   dl_macos_sequoia_h4: "Terminal fix for current macOS",
   dl_macos_sequoia_intro:
     "Use Terminal after copying Plinth to Applications:",
   dl_macos_sequoia_step1:
-    "Drag `Plinth.app` from the mounted DMG into `/Applications`.",
+    "Open **System Settings → Privacy & Security**.",
   dl_macos_sequoia_step2:
-    "Open Terminal and run these two commands:",
+    "Click **Open Anyway**, then confirm.",
   dl_macos_sequoia_step3:
     "Run `open /Applications/Plinth.app` to launch Plinth.",
   dl_macos_sequoia_step4:
@@ -310,10 +310,9 @@ export const en = {
     "Open Terminal and remove quarantine from `/Applications/Plinth.app`.",
   dl_macos_sonoma_step3:
     "Launch Plinth from Terminal or Finder after quarantine is removed.",
-  dl_macos_damaged_h4:
-    "Gatekeeper quarantine fix",
+  dl_macos_damaged_h4: "Alternative",
   dl_macos_damaged_p:
-    "The first command removes the quarantine attribute macOS attached when the file was downloaded; the second launches the app. You normally do not need `sudo`, because the copy in `/Applications` belongs to you — add it only if you get a permissions error.",
+    "Run this after dragging `Plinth.app` into `/Applications`. It removes the quarantine attribute macOS attaches to a downloaded app. You normally do not need `sudo`, because the copy in `/Applications` belongs to you. Add `sudo` only if you get a permissions error.",
   dl_macos_arch_note:
     "**Apple Silicon vs Intel:** on an M-series Mac (M1 / M2 / M3 / M4), download the `arm64` DMG. On Intel Macs, download the `x64` DMG. Running the wrong build still works via Rosetta but is noticeably slower.",
 
@@ -364,7 +363,7 @@ export const en = {
     "Yes — both. Paste a playlist URL or a channel URL (e.g. `youtube.com/@handle`, `/channel/UC…`, `/c/Name`, `/user/Old`); choose how many entries to scan, then queue the whole list or pick specific videos. Date-range filters are coming soon.",
   faq_q9: 'macOS says "the app is damaged" — what do I do?',
   faq_a9:
-    'That\'s macOS Gatekeeper blocking an unsigned app, not actual damage. See [macOS first launch](#macos-first-launch) for the Terminal commands that clear quarantine and launch Plinth.',
+    'See [Installing on macOS](#macos-first-launch). On first launch, if you see "Apple could not verify Plinth", open System Settings → Privacy & Security, click Open Anyway, and confirm. Or run `xattr -dr com.apple.quarantine /Applications/Plinth.app`.',
   faq_q10: "Is downloading YouTube videos legal?",
   faq_a10:
     "For personal, private use it is generally accepted in most jurisdictions. You are responsible for complying with YouTube's [Terms of Service](https://www.youtube.com/t/terms) and your local copyright laws.",

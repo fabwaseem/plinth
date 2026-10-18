@@ -10,7 +10,7 @@
 
 Plinth로 시간을 절약했다면 ⭐를 눌러 다른 사람도 찾을 수 있게 해 주세요.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 이 번역은 AI의 도움으로 작성되었습니다. [영문 README](README.md)가 기준 문서입니다. 오류를 발견했다면 [PR을 열어 주세요](../../pulls).
 
@@ -170,9 +170,10 @@ Plinth의 macOS 빌드는 임시 서명되었지만 Apple 공증을 받지 않�
 1. 마운트한 DMG에서 `Plinth.app`을 `/Applications`로 드래그합니다.
 2. Terminal을 열고 다음 두 명령을 실행합니다:
 
+**Gatekeeper 격리 해결**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 첫 명령은 다운로드할 때 macOS가 붙인 격리 속성을 제거하고 두 번째 명령은 앱을 시작합니다. `/Applications`의 복사본은 사용자 소유이므로 보통 `sudo`가 필요하지 않습니다. 권한 오류가 있을 때만 추가하세요.
@@ -190,6 +191,17 @@ Plinth는 오픈 소스이며 MIT 라이선스를 사용합니다. Windows와 ma
 - **소스를 읽으세요.** 모든 코드가 [GitHub](https://github.com/fabwaseem/plinth)에 있고 [소스에서 빌드](#tech)할 수 있습니다.
 - **SHA256을 확인하세요.** 파일을 공개된 [`SHA256SUMS`](https://github.com/fabwaseem/plinth/releases/latest/download/SHA256SUMS)와 대조하세요. 아래 [다운로드 확인](#verify)을 참고하세요.
 - **외부 검사를 실행하세요.** 파일을 [VirusTotal](https://www.virustotal.com)에 업로드하세요.
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux 최초 실행
 

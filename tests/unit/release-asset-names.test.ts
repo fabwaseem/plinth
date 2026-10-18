@@ -89,6 +89,8 @@ describe('release asset names', () => {
 		// permanently unauthorized — so UNUserNotificationCenter silently drops
 		// every post and never shows the one-time permission prompt.
 		expect(afterPack).toContain('codesign')
+		expect(afterPack).toContain("'--sign', '-'")
+		expect(afterPack).toContain('Signature=adhoc')
 		expect(afterPack).toContain('--identifier')
 		expect(afterPack).toContain('context.packager.appInfo.id')
 		// @electron/fuses rewrites the Mach-O and resets the ad-hoc signature, so
@@ -171,6 +173,39 @@ describe('release asset names', () => {
 		expect(coldStart).not.toContain('Run packaged live probe smoke')
 		expect(coldStart).not.toContain('PLINTH_SMOKE_URL')
 		expect(coldStart).not.toContain('PLINTH_LIVE_CANARY_URL')
+	})
+
+	it('keeps electron-builder from signing over SignPath or notarizing the mac build', () => {
+		const config = JSON.parse(read('electron-builder.json5')) as {
+			win?: {signExecutable?: boolean}
+			mac?: {identity?: string | null; notarize?: boolean}
+		}
+
+		expect(config.win?.signExecutable).toBe(false)
+		expect(config.mac?.identity).toBeNull()
+		expect(config.mac?.notarize).toBe(false)
+	})
+
+	it('submits Windows executables to SignPath before the release artifact is uploaded', () => {
+		const installer = read('.github/workflows/installer-smoke.yml')
+		const release = read('.github/workflows/release.yml')
+
+		expect(installer).toContain('SIGNPATH_API_TOKEN')
+		expect(installer).toContain('vars.SIGNPATH_ORGANIZATION_ID')
+		expect(installer).toContain('vars.SIGNPATH_PROJECT_SLUG')
+		expect(installer).toContain('vars.SIGNPATH_SIGNING_POLICY_SLUG')
+		expect(installer).toContain('vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG')
+		expect(installer).toContain('signpath/github-action-submit-signing-request@f6d04783b4569d051e0c80105fe66e82819d0092')
+		expect(installer).toContain('archive: false')
+		expect(installer).toContain('::warning::SignPath signing skipped')
+		expect(installer).toContain("startsWith(github.ref, 'refs/tags/v')")
+		expect(installer).toContain('publisherName=SignPath Foundation')
+		expect(installer).toContain("CSC_IDENTITY_AUTO_DISCOVERY: 'false'")
+		expect(installer).toContain('refresh-windows-update-metadata.mjs')
+		expect(installer.indexOf('Submit SignPath signing request')).toBeLessThan(installer.indexOf('name: installer'))
+		expect(installer.indexOf('Replace Windows artifacts with the signed files')).toBeLessThan(installer.indexOf('name: installer'))
+		expect(release).toContain('Signature=adhoc')
+		expect(release).toContain('Verify macOS ad-hoc signature')
 	})
 
 	it('smoke-tests Windows installed and portable artifacts before publish', () => {

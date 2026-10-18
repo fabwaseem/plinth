@@ -10,7 +10,7 @@
 
 अगर Plinth आपका समय बचाता है, तो ⭐ दूसरों को इसे खोजने में मदद करती है।
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 यह AI-सहायता प्राप्त अनुवाद है। [अंग्रेज़ी README](README.md) सत्य का स्रोत है। कोई गलती दिखी? [PR का स्वागत है](../../pulls)।
 
@@ -170,9 +170,10 @@ Plinth अभी macOS के लिए कोड-साइन्ड नही�
 1. माउंट किए DMG से `Plinth.app` को `/Applications` में खींचें।
 2. Terminal खोलें और ये दो commands चलाएँ:
 
+**Gatekeeper quarantine fix**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 पहली command आपकी installed Plinth copy से quarantine attribute हटाती है। दूसरी app लॉन्च करती है। `sudo` आपके Mac का password पूछ सकता है; Terminal typing के दौरान characters नहीं दिखाता।
@@ -190,6 +191,17 @@ Plinth को ख़ुद वेरीफ़ाई करने के ती�
 - **सोर्स पढ़ें।** हर लाइन [GitHub](https://github.com/fabwaseem/plinth) पर है और आप [सोर्स से बिल्ड कर सकते हैं](#tech)।
 - **SHA256 जाँचें।** अपनी फ़ाइल को प्रकाशित [`SHA256SUMS`](../../releases/latest) से मिलाएँ — नीचे [अपना डाउनलोड वेरीफ़ाई करें](#verify) देखें।
 - **थर्ड-पार्टी स्कैन चलाएँ।** फ़ाइल को [VirusTotal](https://www.virustotal.com) पर अपलोड करें।
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux पहला लॉन्च
 

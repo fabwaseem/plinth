@@ -10,7 +10,7 @@ Baixe vídeos, Shorts, músicas, canais, podcasts ou faixas de áudio do **YouTu
 
 Se o Plinth economiza seu tempo, uma ⭐ ajuda outras pessoas a encontrá-lo.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 Esta é uma tradução assistida por IA. O [README em inglês](README.md) é a fonte da verdade. Encontrou algum erro? [PRs são bem-vindos](../../pulls).
 
@@ -170,9 +170,10 @@ O Plinth ainda não é assinado digitalmente para macOS, então o Gatekeeper pod
 1. Arraste o `Plinth.app` do DMG montado para a pasta `/Applications`.
 2. Abra o Terminal e rode estes dois comandos:
 
+**Correção da quarentena do Gatekeeper**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 O primeiro comando remove o atributo de quarentena da sua cópia instalada do Plinth. O segundo abre o app. O `sudo` pode pedir a senha do seu Mac; o Terminal não mostra os caracteres enquanto você digita.
@@ -190,6 +191,17 @@ Três formas de verificar o Plinth por conta própria, em ordem crescente de rig
 - **Leia o código-fonte.** Cada linha está no [GitHub](https://github.com/fabwaseem/plinth) e você pode [compilar a partir do código](#tech).
 - **Confira o SHA256.** Compare o seu arquivo com o [`SHA256SUMS`](https://github.com/fabwaseem/plinth/releases/latest/download/SHA256SUMS) publicado — veja [Verifique o seu download](#verify) abaixo.
 - **Rode uma varredura de terceiros.** Envie o arquivo para o [VirusTotal](https://www.virustotal.com).
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Primeira execução no Linux
 

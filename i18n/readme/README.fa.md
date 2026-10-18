@@ -10,7 +10,7 @@
 
 اگر Plinth در وقت شما صرفه‌جویی می‌کند، یک ⭐ کمک می‌کند دیگران هم آن را پیدا کنند.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 این ترجمه با کمک هوش مصنوعی تهیه شده است. [README انگلیسی](README.md) منبع معتبر است. خطایی پیدا کردید؟ [یک PR باز کنید](../../pulls).
 
@@ -170,9 +170,10 @@ Scoop را ترجیح می‌دهید؟ `scoop bucket add plinth https://github.
 1. `Plinth.app` را از DMG بازشده به `/Applications` بکشید.
 2. Terminal را باز و این دو فرمان را اجرا کنید:
 
+**رفع قرنطینهٔ Gatekeeper**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 فرمان نخست ویژگی قرنطینه‌ای را که macOS هنگام دانلود افزوده پاک می‌کند و فرمان دوم برنامه را اجرا می‌کند. معمولاً `sudo` لازم نیست، چون نسخهٔ `/Applications` متعلق به شماست؛ فقط در صورت خطای دسترسی آن را اضافه کنید.
@@ -190,6 +191,17 @@ Plinth متن‌باز و دارای مجوز MIT است. ساخت‌های Wind
 - **کد منبع را بخوانید.** همهٔ خطوط در [GitHub](https://github.com/fabwaseem/plinth) هستند و می‌توانید برنامه را [از منبع بسازید](#tech).
 - **SHA256 را بررسی کنید.** فایل را با [`SHA256SUMS`](https://github.com/fabwaseem/plinth/releases/latest/download/SHA256SUMS) منتشرشده تطبیق دهید؛ بخش [بررسی دانلود](#verify) را ببینید.
 - **از اسکن بیرونی استفاده کنید.** فایل را در [VirusTotal](https://www.virustotal.com) بارگذاری کنید.
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>نخستین اجرا در Linux
 

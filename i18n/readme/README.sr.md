@@ -10,7 +10,7 @@
 
 Ако вам Plinth уштеди времена, ⭐ помаже другима да га пронађу.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 Plinth is a free desktop app for Windows, macOS, and Linux. It saves video, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp) sites onto your computer. MIT licensed. No ads and no usage limits. Install it with [Winget](https://winget.run/pkg/WaseemAnjum/Plinth), [Scoop](https://github.com/fabwaseem/scoop-bucket), [Homebrew](https://github.com/fabwaseem/homebrew-plinth), Flatpak, AppImage, or a direct download.
 
@@ -168,9 +168,10 @@ Plinth још увек није потписан кодом за macOS, па Gat
 1. Превуците `Plinth.app` са монтираног DMG у `/Applications`.
 2. Отворите Terminal и покрените ове две команде:
 
+**Gatekeeper quarantine исправка**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 Прва команда уклања quarantine атрибут са ваше инсталиране копије Plinth. Друга покреће апликацију. `sudo` може затражити лозинку за Mac; Terminal не приказује знакове док је куцате.
@@ -188,6 +189,17 @@ Plinth је open-source пројекат са MIT лиценцом. Windows и m
 - **Прочитајте изворни код.** Свака линија је на [GitHub](https://github.com/fabwaseem/plinth)-у и можете [изградити апликацију из изворног кода](#tech).
 - **Проверите SHA256.** Упоредите свој фајл са објављеним [`SHA256SUMS`](../../releases/latest) — погледајте [Верификујте преузимање](#verify) испод.
 - **Покрените скенирање треће стране.** Отпремите фајл на [VirusTotal](https://www.virustotal.com).
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux: прво покретање
 

@@ -196,6 +196,31 @@ jobs:
           BTBN_GITHUB_TOKEN: ${{ github.token }}
           OPENPANEL_CLIENT_ID: ${{ secrets.OPENPANEL_CLIENT_ID }}
           OPENPANEL_CLIENT_SECRET: ${{ secrets.OPENPANEL_CLIENT_SECRET }}
+          # electron-builder.json5 sets mac.identity to null. This keeps a
+          # runner keychain certificate from signing or notarizing the build.
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Verify macOS ad-hoc signature
+        if: success() && runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          apps=$(find dist -type d -name 'Plinth.app' -print)
+          if [ -z "$apps" ]; then
+            echo "::error::No Plinth.app bundle to check for an ad-hoc signature."
+            find dist -maxdepth 3 -print
+            exit 1
+          fi
+          while IFS= read -r app; do
+            [ -n "$app" ] || continue
+            echo "Checking $app"
+            details=$(codesign -dv --verbose=2 "$app" 2>&1 || true)
+            printf '%s\n' "$details"
+            if ! printf '%s\n' "$details" | grep -q 'Signature=adhoc'; then
+              echo "::error::$app is not ad-hoc signed. codesign --sign - is required so Apple Silicon does not report the app as damaged."
+              exit 1
+            fi
+            codesign --verify --verbose=2 "$app"
+          done <<< "$apps"
       - name: Install Linux smoke dependencies
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y xvfb libfuse2t64

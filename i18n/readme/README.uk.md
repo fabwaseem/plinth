@@ -10,7 +10,7 @@
 
 Якщо Plinth економить ваш час, ⭐ допомагає іншим його знайти.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 Це переклад за допомогою ШІ. [README англійською](README.md) — основне джерело істини. Помітили помилку? [PR вітаються](../../pulls).
 
@@ -170,9 +170,10 @@ Plinth ще не підписаний кодом для macOS, тому післ
 1. Перетягніть `Plinth.app` зі змонтованого DMG до `/Applications`.
 2. Відкрийте Terminal і виконайте ці дві команди:
 
+**Виправлення quarantine Gatekeeper**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 Перша команда видаляє атрибут quarantine з установленої копії Plinth. Друга запускає застосунок. `sudo` може попросити пароль Mac; Terminal не показує символи під час введення.
@@ -190,6 +191,17 @@ Plinth — проєкт із відкритим кодом і ліцензією
 - **Прочитайте вихідний код.** Кожен рядок є на [GitHub](https://github.com/fabwaseem/plinth), і ви можете [зібрати Plinth з джерел](#tech).
 - **Перевірте SHA256.** Порівняйте свій файл із опублікованим [`SHA256SUMS`](../../releases/latest) — дивіться [Перевірте своє завантаження](#verify) нижче.
 - **Запустіть стороннє сканування.** Завантажте файл на [VirusTotal](https://www.virustotal.com).
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux: перший запуск
 

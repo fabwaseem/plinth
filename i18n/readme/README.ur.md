@@ -10,7 +10,7 @@
 
 اگر Plinth آپ کا وقت بچاتا ہے، تو ایک ⭐ دوسروں کو اسے ڈھونڈنے میں مدد کرتا ہے۔
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 یہ AI کی مدد سے کیا گیا ترجمہ ہے۔ [انگریزی README](README.md) سچائی کا ماخذ ہے۔ کوئی غلطی نظر آئی؟ [PR کا خیر مقدم ہے](../../pulls)۔
 
@@ -170,9 +170,10 @@ Plinth ابھی macOS کے لیے کوڈ سائنڈ نہیں ہے، اس لیے 
 1. نصب شدہ DMG سے `Plinth.app` کو `/Applications` میں گھسیٹیں۔
 2. Terminal کھولیں اور یہ دو commands چلائیں:
 
+**Gatekeeper quarantine فکس**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 پہلی command آپ کی installed Plinth copy سے quarantine attribute ہٹاتی ہے۔ دوسری app launch کرتی ہے۔ `sudo` آپ کے Mac کا password مانگ سکتا ہے؛ Terminal typing کے دوران characters نہیں دکھاتا۔
@@ -190,6 +191,17 @@ Plinth کو خود جانچنے کے تین طریقے، بڑھتی ہوئی س�
 - **سورس پڑھیں۔** ہر لائن [GitHub](https://github.com/fabwaseem/plinth) پر موجود ہے اور آپ [سورس سے بلڈ](#tech) کر سکتے ہیں۔
 - **SHA256 چیک کریں۔** اپنی فائل کو شائع شدہ [`SHA256SUMS`](../../releases/latest) سے ملائیں — نیچے [اپنا ڈاؤن لوڈ تصدیق کریں](#verify) دیکھیں۔
 - **تھرڈ پارٹی اسکین چلائیں۔** فائل کو [VirusTotal](https://www.virustotal.com) پر اپ لوڈ کریں۔
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux پر پہلی بار لانچ
 
