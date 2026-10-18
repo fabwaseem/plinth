@@ -10,7 +10,7 @@
 
 Если Plinth экономит вам время — ⭐ поможет другим его найти.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 Это перевод с помощью ИИ. [README на английском](README.md) — основной источник истины. Заметили ошибку? [Pull request приветствуется](../../pulls).
 
@@ -170,9 +170,10 @@ Plinth пока не подписан кодом для macOS, поэтому п
 1. Перетащите `Plinth.app` из смонтированного DMG в `/Applications`.
 2. Откройте Terminal и выполните две команды:
 
+**Исправление карантина Gatekeeper**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 Первая команда удаляет атрибут карантина с установленной копии Plinth. Вторая запускает приложение. `sudo` может запросить пароль Mac; Terminal не показывает символы во время ввода.
@@ -190,6 +191,17 @@ Plinth — открытый проект с лицензией MIT. Сборки
 - **Прочитайте исходный код.** Каждая строка находится на [GitHub](https://github.com/fabwaseem/plinth), и вы можете [собрать Plinth из исходников](#tech).
 - **Проверьте SHA256.** Сравните свой файл с опубликованным [`SHA256SUMS`](../../releases/latest) — см. [Проверьте ваш загрузку](#verify) ниже.
 - **Запустите стороннее сканирование.** Загрузите файл на [VirusTotal](https://www.virustotal.com).
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux: первый запуск
 

@@ -10,6 +10,12 @@ name: Windows Installer
 # Portable) are produced and published here, so release.yml's matrix
 # only handles macOS + Linux. Smoke gates publish: a failed cold-state
 # install blocks the release.
+#
+# On a version tag, when the SignPath secret and repository variables are
+# set, the Setup and Portable executables are Authenticode-signed before
+# the installer artifact is uploaded. Missing configuration skips signing
+# with a warning and the release still publishes unsigned. See
+# docs/CODE_SIGNING.md.
 
 on:
   pull_request:
@@ -45,6 +51,12 @@ jobs:
   build:
     name: Build Windows installer
     runs-on: windows-latest
+    # actions: write covers the artifact upload. The SignPath action reads that
+    # artifact back with the job token, which needs actions: read. Job
+    # permissions replace the workflow permissions, so contents: read stays.
+    permissions:
+      contents: read
+      actions: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -53,9 +65,32 @@ jobs:
         with:
           bun-version: ${{ env.BUN_VERSION }}
       - run: bun install --frozen-lockfile
+      # Tag releases sign when the SignPath secret and required variables exist.
+      # Anything missing skips signing so an unconfigured repo still publishes.
+      - name: Check SignPath configuration
+        id: signpath
+        if: success() && startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        env:
+          SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+          SIGNPATH_ORGANIZATION_ID: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          SIGNPATH_PROJECT_SLUG: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          SIGNPATH_SIGNING_POLICY_SLUG: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+        run: |
+          set -euo pipefail
+          if [ -n "${SIGNPATH_API_TOKEN}" ] && [ -n "${SIGNPATH_ORGANIZATION_ID}" ] && [ -n "${SIGNPATH_PROJECT_SLUG}" ] && [ -n "${SIGNPATH_SIGNING_POLICY_SLUG}" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            echo "SignPath configuration is present. Windows artifacts will be signed before publish."
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::SignPath signing skipped. Windows artifacts will be published unsigned. Set secret SIGNPATH_API_TOKEN and repository variables SIGNPATH_ORGANIZATION_ID, SIGNPATH_PROJECT_SLUG, and SIGNPATH_SIGNING_POLICY_SLUG. Optional variable SIGNPATH_ARTIFACT_CONFIGURATION_SLUG selects a non-default artifact configuration. See docs/CODE_SIGNING.md."
+          fi
       # Build both NSIS Setup and Portable on PR and release. The no-Deno
       # runtime migration must prove both installed and portable executables can
       # use their own Electron runtime before any artifact is published.
+      # electron-builder does not Authenticode-sign (win.signExecutable is false).
+      # publisherName is recorded for electron-updater only on the build SignPath
+      # will sign, so an unsigned release does not demand that publisher next time.
       - name: Build Windows artifacts
         shell: bash
         env:
@@ -66,7 +101,15 @@ jobs:
           # Actions UI. Without it the only way off a bad binary was editing the
           # pin in source and cutting a new tag, mid-release.
           BTBN_RELEASE_TAG: ${{ inputs.btbn_release_tag }}
-        run: bun run dist:win
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+          SIGNPATH_ENABLED: ${{ steps.signpath.outputs.enabled }}
+        run: |
+          set -euo pipefail
+          if [ "${SIGNPATH_ENABLED:-}" = "true" ]; then
+            bun run clean && bun run build && bunx electron-builder --win --publish never "-c.win.signtoolOptions.publisherName=SignPath Foundation"
+          else
+            bun run dist:win
+          fi
       # Gate publish on Defender's verdict over the packed output. Plinth embeds
       # third-party ffmpeg/ffprobe builds; on 2026-09-01 an upstream autobuild's
       # ffprobe.exe tripped Defender as Trojan:Win32/Wacatac.B!ml (a known false
@@ -94,6 +137,84 @@ jobs:
         shell: bash
         run: |
           echo "::warning::Windows Defender flagged the packed output for ${GITHUB_REF_NAME}. The release was NOT blocked. Verify the binary, then re-run this workflow via workflow_dispatch with btbn_release_tag set to a clean BtbN build and re-publish the Windows assets."
+      # One zip, one signing request, one manual approval. archive: false so
+      # SignPath receives that zip rather than a zip of a zip. Entry names are
+      # the bare filenames the artifact configuration matches.
+      - name: Pack unsigned Windows executables for SignPath
+        if: success() && steps.signpath.outputs.enabled == 'true'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Add-Type -AssemblyName System.IO.Compression
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $zipPath = Join-Path (Get-Location) 'plinth-windows-unsigned.zip'
+          if (Test-Path -LiteralPath $zipPath) { Remove-Item -LiteralPath $zipPath }
+          $zip = [System.IO.Compression.ZipFile]::Open($zipPath, [System.IO.Compression.ZipArchiveMode]::Create)
+          try {
+            foreach ($name in @('Plinth-win-x64-Setup.exe', 'Plinth-win-x64-Portable.exe')) {
+              $file = Join-Path 'dist' $name
+              if (-not (Test-Path -LiteralPath $file)) { throw "Missing $file" }
+              $full = (Resolve-Path -LiteralPath $file).Path
+              [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $full, $name) | Out-Null
+            }
+          } finally {
+            $zip.Dispose()
+          }
+      - name: Upload unsigned Windows executables
+        id: upload-unsigned
+        if: success() && steps.signpath.outputs.enabled == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: plinth-windows-unsigned.zip
+          path: plinth-windows-unsigned.zip
+          archive: false
+          if-no-files-found: error
+          retention-days: 1
+      # Empty artifact-configuration-slug is sent through to SignPath, so the
+      # slug input is omitted unless the variable is set. The two steps are
+      # mutually exclusive.
+      - name: Submit SignPath signing request
+        id: sign-default
+        if: success() && steps.signpath.outputs.enabled == 'true' && vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG == ''
+        uses: signpath/github-action-submit-signing-request@f6d04783b4569d051e0c80105fe66e82819d0092
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          github-artifact-id: ${{ steps.upload-unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: '7200'
+          output-artifact-directory: signed-windows
+      - name: Submit SignPath signing request with artifact configuration
+        id: sign-configured
+        if: success() && steps.signpath.outputs.enabled == 'true' && vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG != ''
+        uses: signpath/github-action-submit-signing-request@f6d04783b4569d051e0c80105fe66e82819d0092
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          artifact-configuration-slug: ${{ vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG }}
+          github-artifact-id: ${{ steps.upload-unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: '7200'
+          output-artifact-directory: signed-windows
+      - name: Replace Windows artifacts with the signed files
+        if: steps.sign-default.outcome == 'success' || steps.sign-configured.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          setup=$(find signed-windows -type f -name 'Plinth-win-x64-Setup.exe' -print -quit)
+          portable=$(find signed-windows -type f -name 'Plinth-win-x64-Portable.exe' -print -quit)
+          if [ -z "${setup}" ] || [ -z "${portable}" ]; then
+            echo "::error::SignPath did not return both signed Windows executables."
+            find signed-windows -type f -print
+            exit 1
+          fi
+          cp "$setup" dist/Plinth-win-x64-Setup.exe
+          cp "$portable" dist/Plinth-win-x64-Portable.exe
+          bun scripts/release/refresh-windows-update-metadata.mjs dist
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: installer

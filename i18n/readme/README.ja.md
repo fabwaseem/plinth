@@ -10,7 +10,7 @@
 
 Plinth が役に立ったなら、⭐ で他のユーザーへの周知を助けてください。
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 これは AI 翻訳です。[英語版 README](README.md) が情報のソースです。誤りを見つけたら [PR を歓迎します](../../pulls)。
 
@@ -170,9 +170,10 @@ Plinth はまだ macOS 向けにコード署名されていないため、DMG �
 1. マウントした DMG から `Plinth.app` を `/Applications` にドラッグ。
 2. Terminal を開き、次の 2 つのコマンドを実行します:
 
+**Gatekeeper quarantine の修正**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 最初のコマンドは、インストール済みの Plinth から quarantine 属性を削除します。2 つ目はアプリを起動します。`sudo` は Mac のパスワードを求めることがあります。Terminal は入力中の文字を表示しません。
@@ -190,6 +191,17 @@ Plinth はオープンソースで MIT ライセンスのソフトウェアで�
 - **ソースコードを読む。** すべての行は [GitHub](https://github.com/fabwaseem/plinth) にあり、[ソースからビルド](#tech)することもできます。
 - **SHA256 を確認する。** ダウンロードしたファイルを公開済みの [`SHA256SUMS`](../../releases/latest) と照合してください — 下記の[ダウンロードの検証](#verify)を参照。
 - **サードパーティのスキャンを実行する。** [VirusTotal](https://www.virustotal.com) にファイルをアップロード。
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux 初回起動
 

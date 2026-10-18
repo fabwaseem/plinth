@@ -10,7 +10,7 @@
 
 Agar Plinth vaqtingizni tejasa, ⭐ boshqalarga topishga yordam beradi.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 Plinth is a free desktop app for Windows, macOS, and Linux. It saves video, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp) sites onto your computer. MIT licensed. No ads and no usage limits. Install it with [Winget](https://winget.run/pkg/WaseemAnjum/Plinth), [Scoop](https://github.com/fabwaseem/scoop-bucket), [Homebrew](https://github.com/fabwaseem/homebrew-plinth), Flatpak, AppImage, or a direct download.
 
@@ -168,9 +168,10 @@ Plinth hali macOS uchun kod imzolanmagan, shuning uchun Gatekeeper DMG dan o'rna
 1. O'rnatilgan DMG dan `Plinth.app` ni `/Applications` ga torting.
 2. Terminalni ochib ushbu ikki buyruqni bajaring:
 
+**Gatekeeper quarantine tuzatishi**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 Birinchi buyruq o'rnatilgan Plinth nusxasidan quarantine atributini olib tashlaydi. Ikkinchisi appni ishga tushiradi. `sudo` Mac parolingizni so'rashi mumkin; Terminal parol yozayotganingizda belgilarni ko'rsatmaydi.
@@ -188,6 +189,17 @@ Plinth ni o'zingiz tekshirishning uch yo'li, ortib boruvchi qat'iylikda:
 - **Manbani o'qing.** Har bir satr [GitHub](https://github.com/fabwaseem/plinth) da mavjud va siz [manbadan yaratishingiz](#tech) mumkin.
 - **SHA256 ni tekshiring.** Faylingizni e'lon qilingan [`SHA256SUMS`](../../releases/latest) bilan solishtiring — pastdagi [Yuklab olishingizni tekshiring](#verify) ga qarang.
 - **Uchinchi tomon skanini o'tkazing.** Faylni [VirusTotal](https://www.virustotal.com) ga yuklang.
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux da birinchi ishga tushirish
 

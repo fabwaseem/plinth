@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
-import {execFileSync} from 'node:child_process';
+import {execFileSync, spawnSync} from 'node:child_process';
 
 // electron-builder flips configured fuses *after* this hook and immediately
 // before signing (see platformPackager.doAddElectronFuses). Both branches below
@@ -17,24 +17,33 @@ async function applyConfiguredFuses(context) {
 
 // macOS: give the bundle a real ad-hoc signature under our own bundle id.
 //
-// Why: Plinth ships unsigned (mac.identity is null), which leaves the prebuilt
-// Electron binary carrying only the *linker's* ad-hoc signature. That signature
-// declares `Identifier=Electron` and does not cover Info.plist, so the declared
-// CFBundleIdentifier is untrusted metadata. macOS attributes notifications by
-// code-signing identifier, not CFBundleIdentifier, so the packaged app posted as
-// "Electron" — the same permanently-unauthorized identity the unsigned dev shell
-// uses. The OS dropped every notification in silence and never showed the
-// one-time permission prompt.
+// electron-builder.json5 sets mac.identity to null and mac.notarize to false.
+// Null skips electron-builder's own signing, so it does not apply a Developer ID
+// or hardened-runtime signature on top of this one, and it does not notarize.
+// Notarization needs a paid Apple Developer account. There is no free path.
 //
-// An ad-hoc signature carrying the right identifier and sealing Info.plist is
-// enough to fix attribution; it does not need a Developer ID and does not change
-// Gatekeeper's verdict on the download (still quarantined, still unnotarized).
+// Without this re-sign the prebuilt Electron binary keeps only the linker's
+// ad-hoc signature. That signature declares Identifier=Electron and does not
+// cover Info.plist. macOS attributes notifications by code-signing identifier,
+// so the packaged app posted as "Electron" and the OS dropped every notification.
+// On Apple Silicon an invalid or missing signature is also reported as
+// "damaged" and offers no Open Anyway. `codesign --sign -` seals the bundle
+// ad-hoc: Gatekeeper still says it could not verify the app, and the user can
+// open it from Privacy & Security.
+//
 // --deep re-signs the nested frameworks and helpers innermost-first.
 async function signMacBundleAdHoc(context) {
 	const appPath = path.join(context.appOutDir, `${context.packager.appInfo.productFilename}.app`);
 	const identifier = context.packager.appInfo.id;
 
 	execFileSync('codesign', ['--force', '--deep', '--sign', '-', '--identifier', identifier, appPath], {stdio: 'inherit'});
+
+	const details = spawnSync('codesign', ['-dv', '--verbose=2', appPath], {encoding: 'utf8'});
+	const output = `${details.stdout ?? ''}\n${details.stderr ?? ''}`;
+	if (details.status !== 0 || !output.includes('Signature=adhoc')) {
+		throw new Error(`macOS bundle is not ad-hoc signed (${appPath}). codesign --sign - is required so Apple Silicon does not report the app as damaged.\n${output}`);
+	}
+	execFileSync('codesign', ['--verify', '--verbose=2', appPath], {stdio: 'inherit'});
 }
 
 // Wraps the Electron binary on Linux with a shell script that passes --no-sandbox.

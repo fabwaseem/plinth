@@ -10,7 +10,7 @@
 
 Αν το Plinth σας εξοικονομεί χρόνο, ένα ⭐ βοηθά άλλους να το βρουν.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 Plinth is a free desktop app for Windows, macOS, and Linux. It saves video, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp) sites onto your computer. MIT licensed. No ads and no usage limits. Install it with [Winget](https://winget.run/pkg/WaseemAnjum/Plinth), [Scoop](https://github.com/fabwaseem/scoop-bucket), [Homebrew](https://github.com/fabwaseem/homebrew-plinth), Flatpak, AppImage, or a direct download.
 
@@ -168,9 +168,10 @@ curl -fsSL https://raw.githubusercontent.com/fabwaseem/plinth/main/scripts/insta
 1. Σύρετε το `Plinth.app` από το τοποθετημένο DMG στον φάκελο `/Applications`.
 2. Ανοίξτε το Terminal και εκτελέστε αυτές τις δύο εντολές:
 
+**Διόρθωση quarantine Gatekeeper**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 Η πρώτη εντολή αφαιρεί το χαρακτηριστικό quarantine από το εγκατεστημένο αντίγραφο του Plinth. Η δεύτερη ξεκινά την εφαρμογή. Το `sudo` μπορεί να ζητήσει τον κωδικό του Mac σας· το Terminal δεν εμφανίζει χαρακτήρες όσο τον πληκτρολογείτε.
@@ -188,6 +189,17 @@ open /Applications/Plinth.app
 - **Διαβάστε τον πηγαίο κώδικα.** Κάθε γραμμή βρίσκεται στο [GitHub](https://github.com/fabwaseem/plinth) και μπορείτε να [κατασκευάσετε από τον πηγαίο κώδικα](#tech).
 - **Ελέγξτε το SHA256.** Αντιστοιχίστε το αρχείο σας με το δημοσιευμένο [`SHA256SUMS`](../../releases/latest) — δείτε παρακάτω [Επαληθεύστε τη λήψη σας](#verify).
 - **Εκτελέστε σάρωση τρίτου.** Ανεβάστε το αρχείο στο [VirusTotal](https://www.virustotal.com).
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux — πρώτη εκκίνηση
 

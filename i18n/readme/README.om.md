@@ -10,7 +10,7 @@ Viidiyoo, Shorts, muuziqaa, chaanaalota, podkaastota, ykn sagalee **YouTube fi s
 
 Plinth yeroo si oolfate, ⭐ tokko kan biroo argachuu isaaniif gargaara.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 Plinth is a free desktop app for Windows, macOS, and Linux. It saves video, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp) sites onto your computer. MIT licensed. No ads and no usage limits. Install it with [Winget](https://winget.run/pkg/WaseemAnjum/Plinth), [Scoop](https://github.com/fabwaseem/scoop-bucket), [Homebrew](https://github.com/fabwaseem/homebrew-plinth), Flatpak, AppImage, or a direct download.
 
@@ -168,9 +168,10 @@ Plinth ammallee macOS'f mallattoo hin qabdu, kanaaf Gatekeeper erga DMG irraa fe
 1. `Plinth.app` DMG ramadame irraa `/Applications` tti harkisi.
 2. Terminal baniitii ajajoota lamaan kana hojjedhu:
 
+**Furmaata quarantine Gatekeeper**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 Ajajni jalqabaa kopi Plinth kan feete irraa amala quarantine haqa. Inni lammaffaa app banuu dha. `sudo` jecha darbii Mac kee gaafachuu danda'a; Terminal yeroo barreessitu mallattoo hin agarsiisu.
@@ -188,6 +189,17 @@ Haala sadii Plinth ofii keetiin mirkaneessuuf, kutaa cimina irraa cimina gaditti
 - **Koodii madda dubbisi.** Sarara hundi [GitHub](https://github.com/fabwaseem/plinth) irratti jira fi [madda irraa ijaaruuf](#tech) ni danda'ama.
 - **SHA256 mirkaneessi.** Faayila kee [`SHA256SUMS`](../../releases/latest) maxxanfame walitti bira qabbi — armaan gadii [Buufannoo kee mirkaneessi](#verify) ilaali.
 - **Sakattaa miilaafi baasii.** Faayila [VirusTotal](https://www.virustotal.com) irratti fe'i.
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux yeroo jalqabaa eegaluu
 

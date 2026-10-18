@@ -10,7 +10,7 @@
 
 ถ้า Plinth ช่วยประหยัดเวลา การกด ⭐ จะช่วยให้คนอื่นค้นพบได้ง่ายขึ้น
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 คำแปลนี้จัดทำโดยมี AI ช่วยเหลือ [README ภาษาอังกฤษ](README.md) คือแหล่งข้อมูลหลัก พบข้อผิดพลาดหรือไม่ [เปิด PR](../../pulls) ได้เลย
 
@@ -170,9 +170,10 @@ curl -fsSL https://raw.githubusercontent.com/fabwaseem/plinth/main/scripts/insta
 1. ลาก `Plinth.app` จาก DMG ที่เปิดอยู่ไปยัง `/Applications`
 2. เปิด Terminal แล้วเรียกใช้สองคำสั่งนี้:
 
+**แก้ไข quarantine ของ Gatekeeper**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 คำสั่งแรกนำแอตทริบิวต์กักกันที่ macOS ใส่ไว้ตอนดาวน์โหลดออก คำสั่งที่สองเปิดแอป ปกติไม่ต้องใช้ `sudo` เพราะสำเนาใน `/Applications` เป็นของคุณ — เพิ่มเฉพาะเมื่อพบข้อผิดพลาดด้านสิทธิ์
@@ -190,6 +191,17 @@ Plinth เป็นโอเพนซอร์สภายใต้ MIT License 
 - **อ่านซอร์สโค้ด** ทุกบรรทัดอยู่บน [GitHub](https://github.com/fabwaseem/plinth) และคุณ [สร้างจากซอร์ส](#tech) ได้
 - **ตรวจ SHA256** เปรียบเทียบไฟล์กับ [`SHA256SUMS`](https://github.com/fabwaseem/plinth/releases/latest/download/SHA256SUMS) ที่เผยแพร่ — ดู [ตรวจสอบไฟล์ดาวน์โหลด](#verify) ด้านล่าง
 - **สแกนกับผู้ให้บริการภายนอก** อัปโหลดไฟล์ไปยัง [VirusTotal](https://www.virustotal.com)
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>การเปิดครั้งแรกบน Linux
 

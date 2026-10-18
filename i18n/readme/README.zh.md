@@ -10,7 +10,7 @@
 
 如果 Plinth 帮你节省了时间，点个 ⭐ 让更多人发现它。
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 > 🌐 这是 AI 辅助翻译。[英文 README](README.md) 是真实来源。发现错误？欢迎 [提交 PR](../../pulls)。
 
@@ -170,9 +170,10 @@ Plinth 还没有为 macOS 进行代码签名，所以从 DMG 安装后，Gatekee
 1. 将 `Plinth.app` 从挂载的 DMG 拖入 `/Applications`。
 2. 打开 Terminal，运行这两条命令：
 
+**Gatekeeper quarantine 修复**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 第一条命令会从已安装的 Plinth 副本中移除 quarantine 属性。第二条命令会启动应用。`sudo` 可能会要求输入你的 Mac 密码；Terminal 在输入时不会显示字符。
@@ -190,6 +191,17 @@ Plinth 是开源软件，采用 MIT 许可证。Windows 和 macOS 版本**未经
 - **查看源码。** 每一行都在 [GitHub](https://github.com/fabwaseem/plinth) 上，你也可以[从源码构建](#tech)。
 - **校验 SHA256。** 将你的文件与发布的 [`SHA256SUMS`](../../releases/latest) 对比 — 见下方[验证你的下载](#verify)。
 - **运行第三方扫描。** 将文件上传至 [VirusTotal](https://www.virustotal.com)。
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Linux 首次启动
 

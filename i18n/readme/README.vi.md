@@ -10,7 +10,7 @@ Tải xuống video, Shorts, nhạc, kênh, podcast hoặc bản nhạc từ **Y
 
 Nếu Plinth giúp bạn tiết kiệm thời gian, một ⭐ sẽ giúp người khác tìm thấy nó.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
 Plinth is a free desktop app for Windows, macOS, and Linux. It saves video, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp) sites onto your computer. MIT licensed. No ads and no usage limits. Install it with [Winget](https://winget.run/pkg/WaseemAnjum/Plinth), [Scoop](https://github.com/fabwaseem/scoop-bucket), [Homebrew](https://github.com/fabwaseem/homebrew-plinth), Flatpak, AppImage, or a direct download.
 
@@ -168,9 +168,10 @@ Plinth chưa được ký mã cho macOS, vì vậy Gatekeeper có thể hiển t
 1. Kéo `Plinth.app` từ DMG đã gắn vào `/Applications`.
 2. Mở Terminal và chạy hai lệnh này:
 
+**Sửa quarantine của Gatekeeper**
+
 ```bash
 xattr -dr com.apple.quarantine /Applications/Plinth.app
-open /Applications/Plinth.app
 ```
 
 Lệnh đầu tiên xóa thuộc tính quarantine khỏi bản Plinth đã cài. Lệnh thứ hai khởi chạy ứng dụng. `sudo` có thể hỏi mật khẩu Mac; Terminal sẽ không hiển thị ký tự khi bạn nhập.
@@ -188,6 +189,17 @@ Ba cách để tự xác minh Plinth, theo mức độ nghiêm ngặt tăng dầ
 - **Đọc mã nguồn.** Mọi dòng đều có trên [GitHub](https://github.com/fabwaseem/plinth) và bạn có thể [tự build từ nguồn](#tech).
 - **Kiểm tra SHA256.** So sánh file của bạn với [`SHA256SUMS`](../../releases/latest) đã công bố — xem [Xác minh tải xuống](#verify) bên dưới.
 - **Chạy quét của bên thứ ba.** Tải file lên [VirusTotal](https://www.virustotal.com).
+
+### <a id="code-signing-policy"></a>Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+This is Plinth's code signing policy. It names who may commit and who may approve a Windows signature. It does not mean a published release is already signed. Windows signing in GitHub Actions runs only after the SignPath secret and repository variables in [CODE_SIGNING.md](../../docs/CODE_SIGNING.md) are set. Until then, Windows artifacts are published unsigned.
+
+- Committers: [fabwaseem](https://github.com/fabwaseem)
+- Approvers: [fabwaseem](https://github.com/fabwaseem)
+
+Privacy is described in [Privacy](#privacy). Plinth can send anonymous aggregate telemetry, and that can be turned off in Settings.
 
 ### <a id="linux-first-launch"></a>Lần đầu khởi động trên Linux
 
