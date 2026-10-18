@@ -12,7 +12,7 @@
 		"navLayoutSidebar": "サイドバー",
 		"navLayoutPill": "上部バー"
 	},
-	"about": {"button": "情報", "openTitle": "Plinth について", "tagline": "YouTube と 2000 以上の他サイトに対応する、高速で使いやすいダウンローダー。", "websiteLink": "公式サイト", "githubLink": "GitHub", "licenseLine": "MIT ライセンス · 作者 Waseem Anjum", "thirdPartyNotices": "サードパーティ通知を表示"},
+	"about": {"button": "情報", "openTitle": "Plinth について", "tagline": "YouTube と 2000 以上の他サイトに対応する、高速で使いやすいダウンローダー。", "websiteLink": "公式サイト", "githubLink": "GitHub", "licenseLine": "MIT ライセンス · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "サードパーティ通知を表示"},
 	"titleBar": {"close": "閉じる", "minimize": "最小化", "maximize": "最大化", "restore": "元に戻す"},
 	"splash": {
 		"greeting": "やあ、おかえり!",

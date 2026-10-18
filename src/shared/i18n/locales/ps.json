@@ -12,7 +12,7 @@
 		"navLayoutSidebar": "اړخیزه پټه",
 		"navLayoutPill": "پورتنۍ پټه"
 	},
-	"about": {"button": "د اړوند", "openTitle": "د Plinth اړوند", "tagline": "د YouTube او 2000+ نورو سایټونو لپاره چټک او اسانه ډاونلوډر.", "websiteLink": "ویب پاڼه", "githubLink": "GitHub", "licenseLine": "MIT جواز · د Waseem Anjum لخوا", "thirdPartyNotices": "د دریم ډلې خبرتیاوې وګورئ"},
+	"about": {"button": "د اړوند", "openTitle": "د Plinth اړوند", "tagline": "د YouTube او 2000+ نورو سایټونو لپاره چټک او اسانه ډاونلوډر.", "websiteLink": "ویب پاڼه", "githubLink": "GitHub", "licenseLine": "MIT جواز · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "د دریم ډلې خبرتیاوې وګورئ"},
 	"titleBar": {"close": "تړل", "minimize": "کوچنی کول", "maximize": "لوی کول", "restore": "بیرته راوستل"},
 	"splash": {
 		"greeting": "سلام، ښه راغلاست!",

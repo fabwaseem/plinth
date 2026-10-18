@@ -4,15 +4,21 @@
 
 Download videos, Shorts, music, channels, podcasts, or audio tracks from **YouTube and 2000+ supported sites** — up to 4K HDR at 60 fps, or as MP3 / AAC / Opus. Runs locally on Windows, macOS, and Linux. **No ads, no bloat, no upsells.**
 
+Plinth is a fork of [Arroxy](https://github.com/antonio-orionus/Arroxy) by Antonio Orionus, MIT licensed.
+
+### What Plinth changes
+
+- Published as Plinth by Waseem Anjum, with its own site ([plinth.fabwaseem.com](https://plinth.fabwaseem.com)) and its own Scoop and Homebrew packages.
+
 **Read in:** [Afaan Oromoo](i18n/readme/README.om.md) · [Bahasa Indonesia](i18n/readme/README.id.md) · [Deutsch](i18n/readme/README.de.md) · **English** · [Español](i18n/readme/README.es.md) · [Français](i18n/readme/README.fr.md) · [Italiano](i18n/readme/README.it.md) · [Kiswahili](i18n/readme/README.sw.md) · [O'zbekcha](i18n/readme/README.uz.md) · [Polski](i18n/readme/README.pl.md) · [Português](i18n/readme/README.pt.md) · [Tiếng Việt](i18n/readme/README.vi.md) · [Türkçe](i18n/readme/README.tr.md) · [አማርኛ](i18n/readme/README.am.md) · [العربية](i18n/readme/README.ar.md) · [اردو](i18n/readme/README.ur.md) · [پښتو](i18n/readme/README.ps.md) · [فارسی](i18n/readme/README.fa.md) · [বাংলা](i18n/readme/README.bn.md) · [हिन्दी](i18n/readme/README.hi.md) · [ไทย](i18n/readme/README.th.md) · [မြန်မာဘာသာ](i18n/readme/README.my.md) · [Ελληνικά](i18n/readme/README.el.md) · [Русский](i18n/readme/README.ru.md) · [Српски](i18n/readme/README.sr.md) · [Українська](i18n/readme/README.uk.md) · [中文](i18n/readme/README.zh.md) · [日本語](i18n/readme/README.ja.md) · [한국어](i18n/readme/README.ko.md) · [繁體中文](i18n/readme/README.zh-Hant.md)
 
 [**↓ Install Latest Release**](#install) · [**Website**](https://plinth.fabwaseem.com) · [Windows first launch](#windows-first-launch) · [macOS first launch](#macos-first-launch) · [Linux first launch](#linux-first-launch)
 
 If Plinth saves you time, a ⭐ helps others find it.
 
-_Last updated: 2026-10-17._
+_Last updated: 2026-10-18._
 
-Plinth is a free desktop app for Windows, macOS, and Linux. It saves video, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp) sites onto your computer. MIT licensed. No ads and no usage limits. Install it with [Winget](https://winget.run/pkg/WaseemAnjum/Plinth), [Scoop](https://github.com/fabwaseem/scoop-bucket), [Homebrew](https://github.com/fabwaseem/homebrew-plinth), Flatpak, AppImage, or a direct download.
+Plinth is a free desktop app for Windows, macOS, and Linux. It saves video, audio, playlists, and subtitles from YouTube and 2000+ other [yt-dlp](https://github.com/yt-dlp/yt-dlp) sites onto your computer. MIT licensed. No ads and no usage limits. Install it with [Scoop](https://github.com/fabwaseem/scoop-bucket), [Homebrew](https://github.com/fabwaseem/homebrew-plinth), Flatpak, AppImage, or a direct download. `winget install WaseemAnjum.Plinth` is coming soon.
 
 ---
 
@@ -110,9 +116,7 @@ Plinth is a free desktop app for Windows, macOS, and Linux. It saves video, audi
 
 **Windows**
 
-```bash
-winget install WaseemAnjum.Plinth
-```
+`winget install WaseemAnjum.Plinth` is coming soon ([microsoft/winget-pkgs#454738](https://github.com/microsoft/winget-pkgs/pull/454738) is still open). Until then, use [Scoop](https://github.com/fabwaseem/scoop-bucket), [Homebrew](https://github.com/fabwaseem/homebrew-plinth) on macOS, or a [direct download](https://github.com/fabwaseem/plinth/releases/latest).
 
 **macOS**
 

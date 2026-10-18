@@ -12,7 +12,7 @@
 		"navLayoutSidebar": "Bilah samping",
 		"navLayoutPill": "Bilah atas"
 	},
-	"about": {"button": "Tentang", "openTitle": "Tentang Plinth", "tagline": "Pengunduh yang cepat dan ramah untuk YouTube dan 2000+ situs lainnya.", "websiteLink": "Situs web", "githubLink": "GitHub", "licenseLine": "Lisensi MIT · oleh Waseem Anjum", "thirdPartyNotices": "Lihat pemberitahuan pihak ketiga"},
+	"about": {"button": "Tentang", "openTitle": "Tentang Plinth", "tagline": "Pengunduh yang cepat dan ramah untuk YouTube dan 2000+ situs lainnya.", "websiteLink": "Situs web", "githubLink": "GitHub", "licenseLine": "Lisensi MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "Lihat pemberitahuan pihak ketiga"},
 	"titleBar": {"close": "Menutup", "minimize": "Memperkecil", "maximize": "Maksimalkan", "restore": "Memulihkan"},
 	"splash": {
 		"greeting": "Hei, selamat datang kembali!",

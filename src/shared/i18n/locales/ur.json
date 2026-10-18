@@ -12,7 +12,7 @@
 		"navLayoutSidebar": "سائیڈ بار",
 		"navLayoutPill": "اوپر کی بار"
 	},
-	"about": {"button": "کے بارے میں", "openTitle": "Plinth کے بارے میں", "tagline": "YouTube اور 2000+ دیگر سائٹس کے لیے تیز اور آسان ڈاؤنلوڈر۔", "websiteLink": "ویب سائٹ", "githubLink": "GitHub", "licenseLine": "MIT لائسنس · از Waseem Anjum", "thirdPartyNotices": "فریق ثالث کے نوٹس دیکھیں"},
+	"about": {"button": "کے بارے میں", "openTitle": "Plinth کے بارے میں", "tagline": "YouTube اور 2000+ دیگر سائٹس کے لیے تیز اور آسان ڈاؤنلوڈر۔", "websiteLink": "ویب سائٹ", "githubLink": "GitHub", "licenseLine": "MIT لائسنس · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "فریق ثالث کے نوٹس دیکھیں"},
 	"titleBar": {"close": "بند کریں", "minimize": "چھوٹا کریں", "maximize": "بڑا کریں", "restore": "بحال کریں"},
 	"splash": {
 		"greeting": "ارے، خوش آمدید!",

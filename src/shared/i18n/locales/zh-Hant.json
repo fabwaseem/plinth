@@ -12,7 +12,7 @@
 		"navLayoutSidebar": "側邊欄",
 		"navLayoutPill": "頂端列"
 	},
-	"about": {"button": "關於", "openTitle": "關於 Plinth", "tagline": "快速、好用的下載工具，支援 YouTube 與其他 2000 多個網站。", "websiteLink": "網站", "githubLink": "GitHub", "licenseLine": "MIT 授權條款 · 作者 Waseem Anjum", "thirdPartyNotices": "檢視第三方聲明"},
+	"about": {"button": "關於", "openTitle": "關於 Plinth", "tagline": "快速、好用的下載工具，支援 YouTube 與其他 2000 多個網站。", "websiteLink": "網站", "githubLink": "GitHub", "licenseLine": "MIT 授權條款 · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "檢視第三方聲明"},
 	"titleBar": {"close": "關閉", "minimize": "最小化", "maximize": "最大化", "restore": "還原"},
 	"splash": {
 		"greeting": "嘿，歡迎回來！",

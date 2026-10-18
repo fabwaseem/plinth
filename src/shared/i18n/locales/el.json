@@ -12,7 +12,7 @@
 		"navLayoutSidebar": "Πλαϊνή στήλη",
 		"navLayoutPill": "Επάνω γραμμή"
 	},
-	"about": {"button": "Σχετικά", "openTitle": "Σχετικά με το Plinth", "tagline": "Γρήγορο και φιλικό πρόγραμμα λήψης για το YouTube και 2000+ άλλους ιστότοπους.", "websiteLink": "Ιστότοπος", "githubLink": "GitHub", "licenseLine": "Άδεια MIT · από Waseem Anjum", "thirdPartyNotices": "Προβολή ανακοινώσεων τρίτων"},
+	"about": {"button": "Σχετικά", "openTitle": "Σχετικά με το Plinth", "tagline": "Γρήγορο και φιλικό πρόγραμμα λήψης για το YouTube και 2000+ άλλους ιστότοπους.", "websiteLink": "Ιστότοπος", "githubLink": "GitHub", "licenseLine": "Άδεια MIT · Copyright (c) 2026 Antonio Orionus · Copyright (c) 2026 Waseem Anjum", "thirdPartyNotices": "Προβολή ανακοινώσεων τρίτων"},
 	"titleBar": {"close": "Κλείσιμο", "minimize": "Ελαχιστοποίηση", "maximize": "Μεγιστοποίηση", "restore": "Επαναφορά"},
 	"splash": {
 		"greeting": "Καλώς ήρθες πάλι!",
